@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить задание</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    {% load static %}
+    <script type="text/javascript" src="{% static 'asp/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'asp/js/choose.js' %}"></script>
+</head>
+
+<style>
+    #id_taskName {
+        margin-left: 10px;
+        height: 25px;
+        }
+    h3 {
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 1.4em;
+        margin-left: 10px;
+        margin-bottom: 10px;
+        }
+
+    label {
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 1.4em;
+    }
+
+    input {
+        border: 2px solid #ddd;
+        box-shadow: 2px 2px 2px #aaa;
+        border-radius: 2px;
+        width: 20%;
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 20px;
+        padding-left: 3px;
+        margin-top: 5px;
+        margin-left: 15px;
+    }
+
+    form {
+        margin-top: 25px;
+    }
+
+    textarea {
+        margin-left: 10px;
+        resize: none;
+        font-family: 'Roboto Condensed', sans-serif;
+        border: 2px solid #ddd;
+        box-shadow: 2px 2px 2px #aaa;
+        border-radius: 2px;
+        margin-bottom: 30px;
+    }
+
+    a#add {
+        font-family: 'Roboto Condensed', sans-serif;
+        font-weight: 600;
+        color: white;
+        text-decoration: none;
+        padding: .8em 1em calc(.8em + 3px);
+        border-radius: 3px;
+        background: rgb(64,199,129);
+        box-shadow: 0 -3px rgb(53,167,110) inset;
+        transition: 0.2s;
+        margin-top: 50px;
+        margin-left: 10px;
+        margin-bottom: 25px;
+    }
+
+    a#add:hover { background: rgb(53, 167, 110); }
+    a#add:active {
+        background: rgb(33,147,90);
+        box-shadow: 0 3px rgb(33,147,90) inset;
+      }
+
+    #vars {
+        margin-top: 35px;
+        margin-left: 10px;
+        margin-bottom: 15px;
+    }
+
+    #send {
+        margin-top: 30px;
+        }
+</style>
+
+<body>
+    <script>
+        function deleteTest(d){
+            $('#test'+d).remove();
+        }
+    </script>
+    {% if addMode %}
+    <form id='taskForm' method="POST">
+        {% csrf_token %}
+        <h3>Название задания: </h3>
+        {{ form.taskName }}
+        <h3>Описание задания: </h3>
+        {{ form.textdescription }} <br>
+        <a id="add">Добавить тест</a>
+        <h3>Входные данные / Выходные данные</h3>
+        <div id="vars"></div>
+        <input type="button" id='send' value="Добавить задание">
+    </form>
+    {% endif %}
+
+    {% if editMode %}
+    <form id="taskForm" method="POST">
+        {% csrf_token %}
+        <h3>Название задания: </h3>
+        <input type="text" name="taskName" maxlength="100" required id="id_taskName" value="{{ task.taskname }}"><br>
+        <h3>Описание задания: </h3>
+        <textarea name="textdescription" cols="55" rows="10" maxlength="600" required="" id="id_textdescription">{{ task.taskdesc }}</textarea> <br>
+        <a id="add">Добавить тест</a>
+        <h3>Входные данные / Выходные данные</h3>
+        <div id="vars"></div>
+        <input type="button" id='edit' value="Изменить">
+    </form>
+    {% endif %}
+</body>
+</html>

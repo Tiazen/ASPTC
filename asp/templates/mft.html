@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Teacher</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+        {%load static%}
+        <script type="text/javascript" src="{% static 'asp/js/jquery.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'asp/css/style.css' %}">
+        <script type="text/javascript" src="{% static 'asp/js/index.js' %}"></script>
+    </head>
+    <body>
+    {% csrf_token %}
+    <div id="wrapper">
+        <div id="nav">
+            <h3 id="asptc">АСРЗП</h3>
+            <a id="logout" href="/logout">Выйти</a>
+            <h3 id="name">{{ name }} {{ surname }}</h3>
+        </div>
+        <div id="leftMenu">
+            <h3 id="classes">Классы</h3>
+            <select id="num">
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+            </select>
+            <select id="letter">
+                <option value="А">А</option>
+                <option value="Б">Б</option>
+                <option value="В">В</option>
+                <option value="Г">Г</option>
+                <option value="Д">Д</option>
+                <option value="Е">Е</option>
+            </select><br>
+            <a id="apply">Применить</a>
+            <h3 id="tasks">Задания</h3>
+        </div>
+        <div class="content">
+            <div id="filter">{% include 'upBar.html' %}</div>
+        <div id="className"></div>
+        <div id="studentTable"></div>
+        <div id="tasklist">
+        </div>
+        </div>
+    </div>
+    </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'asp/css/styles.css' %}">
+</head>
+<body>
+
+<h1>Регистрация в системе</h1>
+<form action="/regist/" method="post">
+    {% csrf_token %}
+    Логин: {{ form.login }}<br>
+    Пароль: {{ form.passw }}<br>
+    Имя: {{ form.name }}<br>
+    Фамилия: {{ form.surname }}<br>
+    Класс: {{ form.degree }}
+    Буква: {{ form.letter }}
+
+    <input type="submit">
+</form>
+
+{% if error %}
+<h2>Такой пользователь уже существует.</h2>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Логин</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'asp/css/style.css' %}">
+</head>
+<body>
+<form action="/login/" method="post">
+    {% csrf_token %}
+    Login: {{ form.login }}<br>
+    Password {{ form.password }}<br>
+    <input type="submit">
+</form>
+
+{% if error %}
+    <h2>Неправильный логин или пароль</h2>
+{% endif %}
+
+<a href="/regist">Регистрация</a>
+</body>
+</html>
