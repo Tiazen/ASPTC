@@ -29,20 +29,16 @@ $(document).ready(function(){
     }
 });
 
-    var count = 0;
+
     var del = ''
     var inp = ''
+    var count = 0
 
     var field = ['#id_taskName', '#id_textdescription', '#1', '#out1']
     function updateInp(){
         count += 1;
         del = '<a onclick="deleteTest(' + count + ')" style="font-size: 28px; margin-left: 8px; top: 2px;">&times;</a>'
         inp = '<div id="test' + count + '"><label for="#inp' + count + '">' + count + '</label><input type="text" name="inp' + count + '" id="' + count + '"><input type="text" name="out' + count + '" id="out' + count + '">' + del + '<br></div>';
-    }
-
-    function start() {
-        updateInp();
-        $('#vars').append('<div id="test' + count + '"><label for="#inp' + count + '">' + count + '</label><input type="text" name="inp' + count + '" id="' + count + '"><input type="text" name="out' + count + '" id="out' + count + '"><br></div>');
     }
 
     function check() {
@@ -64,8 +60,6 @@ $(document).ready(function(){
         }
     }
 
-    start();
-
     $('#add').click(function(event) {
         updateInp();
         $('#vars').append(inp);
@@ -76,7 +70,8 @@ $(document).ready(function(){
         var outVars = ''
         var taskname = $("#id_taskName").val();
         var taskDesc = $("#id_textdescription").val();
-        for(var i=1; i < count+1; ++i) {
+        var category = $('#category').val()
+        for(var i=1; i < 50; ++i) {
             if ($('#'+i).val() !== undefined) {
                 inpVars += $('#'+i).val() + ',';
                 outVars += $('#out'+i).val() + ','
@@ -85,9 +80,9 @@ $(document).ready(function(){
 
         if (check()) {
         $.ajax({
-            url: '/addtask',
+            url: '/addtask/',
             type: 'POST',
-            data: 'taskname=' + taskname + '&taskdesc=' + taskDesc + '&inputs=' + inpVars + '&outs=' + outVars,
+            data: 'taskname=' + taskname + '&taskdesc=' + taskDesc + '&inputs=' + inpVars + '&outs=' + outVars + '&category=' + category,
             success: function(msg){
                 window.location.replace('/');
             }
@@ -102,7 +97,10 @@ $(document).ready(function(){
         var outVars = ''
         var taskname = $("#id_taskName").val();
         var taskDesc = $("#id_textdescription").val();
-        for(var i=1; i < count+1; ++i) {
+        var id = $("#id").val();
+        var category = $('#category').val()
+
+        for(var i=1; i < 100; ++i) {
             if ($('#'+i).val() !== undefined) {
                 inpVars += $('#'+i).val() + ',';
                 outVars += $('#out'+i).val() + ','
@@ -110,12 +108,10 @@ $(document).ready(function(){
         }
 
         $.ajax({
-            url: '/edittask',
+            url: '/edittask/',
             type: 'POST',
-            data: 'taskname=' + taskname + '&taskdesc=' + taskDesc + '&inputs=' + inpVars + '&outs=' + outVars,
-            success: function(msg){
-                window.location.replace('/');
-            }
+            data: 'id=' + id + '&taskname=' + taskname + '&taskdesc=' + taskDesc + '&inputs=' + inpVars + '&outputs=' + outVars + '&category=' + category,
+
         });
     });
 });

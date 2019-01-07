@@ -15,6 +15,8 @@ html, body {
     margin-top: 82px;
     margin-left: 12%;
     height: 100%;
+    width: 82%;
+    max-width: 82%:
 }
 
 #nav {
@@ -29,13 +31,12 @@ html, body {
 #name {
     position: inherit;
     margin: 0;
-    margin-right: 9px;
-    float: right;
+    right: 7%;
     top: 8px;
-    right: 8%;
+    margin-right: 12px;
     color: white;
     font-family: 'Roboto Condensed', sans-serif;
-    font-size: 1.5em;
+    font-size: 25px;
 }
 
 #logout {
@@ -43,11 +44,11 @@ html, body {
     float: right;
     margin: 0;
     margin-right: 5%;
-    top: 10px;
+    top: 6px;
     right: -2%;
     color: white;
     font-family: 'Roboto Condensed', sans-serif;
-    font-size: 1.5em;
+    font-size: 26px;
 }
 
 a {
@@ -81,7 +82,7 @@ a {
     margin-left: 50px;
 }
 
-#classes, #tasks{
+#classes, #tasks, #settings{
     color: white;
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 1.5em;
@@ -90,7 +91,9 @@ a {
     margin-left: 50px;
 }
 
-
+#setcon {
+    margin-left: 50px;
+}
 
 #num {
     height: 42px;
@@ -141,39 +144,29 @@ a:hover {
     font-family: 'Roboto Condensed', sans-serif;
     }
 
-table {
-  font-family: 'Roboto Condensed', sans-serif;
-  font-size: 14px;
-  background: white;
-  max-width: 70%;
-  width: 70%;
-  border-collapse: collapse;
-  text-align: left;
-  border: 1px solid gray;
-}
 
-th {
-  font-weight: normal;
-  color: #039;
-  padding: 10px 15px;
-}
-
-td {
-  color: #669;
-  border-top: 1px solid #e8edff;
-  padding: 10px 15px;
-}
-
-tr:nth-child(2n) {background: #fafbfc;}
 
 #tasks:hover {
     color: red;
 }
 
+table {
+    border: 1px solid #ddd;
+    width: 75%;
+}
+
+table td {
+    border: 1px solid #ddd;
+}
+
+table th {
+    border: 1px solid #ddd;
+}
+
 .task {
     font-family: 'Roboto Condensed', sans-serif;
     padding: 16px;
-    width: 90%;
+    width: 100%;
     border: 1px solid #ddd;
     background-color: #asd;
     margin-top: 5px;

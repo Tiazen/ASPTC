@@ -15,6 +15,22 @@
     a.button7:active {
         background: rgb(33,147,90);
         box-shadow: 0 3px rgb(33,147,90) inset;
-      }
+    }
+
+    input {
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        float: right;
+        height: 34px;
+    }
     </style>
-<a href="/addtask" class="button7">Добавить задание</a>
+
+    <div class="row">
+        <div class="col"> <a class="btn btn-success" href="/addtask" role="button">Добавить задание</a> </div>
+        <form class="form-inline">
+            <input type="text" id="search" class="form-control" placeholder="Поиск">
+            <div class="col-auto">
+      <button type="button" class="btn btn-primary" id="searchbtn">Найти</button>
+    </div>
+        </form>
+    </div>

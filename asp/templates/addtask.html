@@ -50,6 +50,7 @@
         box-shadow: 2px 2px 2px #aaa;
         border-radius: 2px;
         margin-bottom: 30px;
+        font-size: 18px;
     }
 
     a#add {
@@ -82,6 +83,24 @@
     #send {
         margin-top: 30px;
         }
+
+    select {
+        margin-left: 10px;
+    }
+
+    .form-control {
+        display: block;
+        height: calc(2.25rem + 2px);
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
 </style>
 
 <body>
@@ -97,9 +116,18 @@
         {{ form.taskName }}
         <h3>Описание задания: </h3>
         {{ form.textdescription }} <br>
+        <h3>Категория задания:</h3>
+        <select style="margin-bottom: 20px;" class="form-control" id="category">
+            <option selected value="{{ actualcat }}">{{ actualcat }}</option>
+        {% for i in categories %}
+            <option value="{{ i.name }}">{{ i.name }}</option>
+        {% endfor %}
+        </select><br>
         <a id="add">Добавить тест</a>
         <h3>Входные данные / Выходные данные</h3>
-        <div id="vars"></div>
+        <div id="vars">
+            <div id="test1"><label for="#inp1">1</label><input type="text" name="inp1" id="1"><input type="text" name="out1" id="out1"><br></div>
+        </div>
         <input type="button" id='send' value="Добавить задание">
     </form>
     {% endif %}
@@ -107,13 +135,27 @@
     {% if editMode %}
     <form id="taskForm" method="POST">
         {% csrf_token %}
+        <input type="hidden" id="id" value="{{ id }}">
         <h3>Название задания: </h3>
         <input type="text" name="taskName" maxlength="100" required id="id_taskName" value="{{ task.taskname }}"><br>
         <h3>Описание задания: </h3>
         <textarea name="textdescription" cols="55" rows="10" maxlength="600" required="" id="id_textdescription">{{ task.taskdesc }}</textarea> <br>
+        <h3>Категория задания:</h3>
+        <select style="margin-bottom: 20px;" class="form-control" id="category">
+            <option selected value="{{ actualcat }}">{{ actualcat }}</option>
+        {% for i in categories %}
+            <option value="{{ i.name }}">{{ i.name }}</option>
+        {% endfor %}
+        </select><br>
         <a id="add">Добавить тест</a>
         <h3>Входные данные / Выходные данные</h3>
-        <div id="vars"></div>
+        <div id="vars">
+            {% autoescape off %}
+            {% for i in tests %}
+            {{ i }}
+            {% endfor %}
+            {% endautoescape %}
+        </div>
         <input type="button" id='edit' value="Изменить">
     </form>
     {% endif %}

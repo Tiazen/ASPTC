@@ -27,6 +27,12 @@ urlpatterns = [
     path('regist/', views.registuser),
     path('login/', views.login),
     path('logout/', views.logout),
-    path('addtask', views.addtask),
-    path('edittask', views.edittask)
+    path('addtask/', views.addtask),
+    path('edittask/', views.edittask),
+    path('search/', views.searchlist),
+    path('stats/', views.stat),
+    path('settings/', views.returnsettings),
+    path('updatethemes/', views.updatethemes),
+
+
 ]
