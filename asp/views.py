@@ -247,3 +247,9 @@ def tasktheme(request):
         'surname': request.session['surname']
     }
     return render(request, "themepage.html", context)
+
+def saveFile(request):
+    if request.method == "POST":
+        file = request.FILES
+        print(file)
+        return HttpResponse(file)

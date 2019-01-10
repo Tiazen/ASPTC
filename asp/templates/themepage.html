@@ -39,7 +39,11 @@
             <div class="row">
                 <div class="col">
                     <h4>Загрузка решения</h4>
-                    <input type="file">
+                    <form enctype="multipart/form-data" method="post" id="fileform{{ i.id }}" action="/loadfile/">
+                        {% csrf_token %}
+                        <input type="file" id="file{{ i.id }}">
+                        <button type="submit" class="btn btn-success" onclick="test()">Отправить</button>
+                    </form>
                 </div>
             </div>
         </div>
