@@ -33,6 +33,6 @@ urlpatterns = [
     path('stats/', views.stat),
     path('settings/', views.returnsettings),
     path('updatethemes/', views.updatethemes),
-
+    path('tasktheme/', views.tasktheme)
 
 ]

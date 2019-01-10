@@ -1,25 +1,10 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Teacher</title>
-        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
-        {%load static%}
-        <script type="text/javascript" src="{% static 'asp/js/jquery.js' %}"></script>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-              integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'asp/css/style.css' %}">
+{% extends "base.html" %}
+{% block scripts %}
+{% load static %}
         <script type="text/javascript" src="{% static 'asp/js/index.js' %}"></script>
-    </head>
-    <body>
-    {% csrf_token %}
-    <div id="wrapper">
-        <div id="nav">
-            <a href="/" id="asptc">АСРЗП</a>
-            <a id="logout" href="/logout">Выйти</a>
-            <h3 id="name">{{ name }} {{ surname }}</h3>
-        </div>
-        <div id="leftMenu">
+{% endblock %}
+{% block title %}Панель учителя{% endblock %}
+{% block leftmenu %}
             <h3 id="classes">Классы</h3>
             <select id="num">
                 <option value="5">5</option>
@@ -41,14 +26,11 @@
             <a id="apply">Применить</a>
             <h3 id="tasks">Задания</h3>
             <h3 id="settings">Настройки</h3>
-        </div>
-        <div class="content">
-            <div id="filter">{% include 'upBar.html' %}</div>
+{% endblock %}
+{%  block content %}
+            <div id="filter" style="margin-left: 52px;">{% include 'upBar.html' %}</div>
             <div id="className"></div>
             <div id="studentTable"></div>
             <div id="tasklist"></div>
             <div id="setcon"></div>
-        </div>
-    </div>
-    </body>
-</html>
+{% endblock %}

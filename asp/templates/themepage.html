@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ themename }}{% endblock %}
+{% block scripts %}
+{% load static %}
+        <script type="text/javascript" src="{% static 'asp/js/student.js' %}"></script>
+{% endblock %}
+
+{% block leftmenu %}
+    {% for i in tasks %}
+    <a href="#{{ i.id }}" style="color: white; font-size: 24px;">{{ i.taskname }}</a><br>
+    {% endfor %}
+{% endblock %}
+
+{% block content %}
+    <style>
+        .task {
+            margin-left: 52px;
+            }
+    </style>
+    {% for i in tasks %}
+        <div class="task">
+            <div class="row" id="{{ i.id }}">
+                <div class="col">
+                    <h3>Название: {{ i.taskname }}</h3>
+                    <p>Описание: <br> {{ i.taskdesc }}</p>
+                </div>
+            </div>
+            <h4>Пример тестирования</h4>
+            <div class="row">
+                <div class="col-2">
+                    <h4>Входные данные</h4>
+                    {{ i.testin }}
+                </div>
+                <div class="col-2">
+                    <h4>Выходные данные</h4>
+                    {{ i.testout }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h4>Загрузка решения</h4>
+                    <input type="file">
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

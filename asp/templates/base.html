@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+        {%load static%}
+        <script type="text/javascript" src="{% static 'asp/js/jquery.js' %}"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+              integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'asp/css/style.css' %}">
+        {% block scripts %}{% endblock %}
+    </head>
+    <body>
+    {% csrf_token %}
+    <div id="wrapper">
+        <div id="nav">
+            <a href="/" id="asptc">АСРЗП</a>
+            <a id="logout" href="/logout">Выйти</a>
+            <h3 id="name">{{ name }} {{ surname }}</h3>
+        </div>
+        <div id="leftMenu">
+            <div id="innerleftmenu" style="padding: 25px; margin: 0; width: 100%; height: 100%;">
+            {% block leftmenu %}
+            {% endblock %}
+            </div>
+        </div>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

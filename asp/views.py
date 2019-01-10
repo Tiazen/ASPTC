@@ -30,7 +30,7 @@ def index(request):
         context = {
             'name': request.session['name'],
             'surname': request.session['surname'],
-            'themes': themes.themes
+            'themes': themes.getThemes()
         }
         return render(request, 'student.html', context)
     else:
@@ -165,9 +165,10 @@ def logout(request):
 
 def addtask(request):
     if request.method == 'POST':
+        print(request.POST)
         s = request.POST
         recordTask = tasks(taskname=s['taskname'], taskdesc=s['taskdesc'], inputs=s['inputs'], outputs=s['outs'],
-                           category=s['category'])
+                           category=s['category'], testin=(s['inputs'].split(','))[0], testout=(s['outs'].split(','))[0])
         recordTask.save()
 
         return HttpResponse('OK')
@@ -180,6 +181,7 @@ def addtask(request):
 
 def edittask(request):
     if request.method == 'POST':
+        print(request.POST)
         s = request.POST
         taskname = s['taskname']
         taskdesc = s['taskdesc']
@@ -187,6 +189,8 @@ def edittask(request):
         outputs = s['outputs']
         id = s['id']
         cate = s['category']
+        testin = (inputs.split(','))[0]
+        testout = (outputs.split(','))[0]
 
         sel = tasks.objects.get(id=id)
         sel.taskname = taskname
@@ -194,6 +198,8 @@ def edittask(request):
         sel.inputs = inputs
         sel.outputs = outputs
         sel.category = cate
+        sel.testin = testin
+        sel.testout = testout
         sel.save()
 
         return HttpResponse('OK')
@@ -206,11 +212,11 @@ def edittask(request):
         tests = []
 
         for i in range(len(inputs) - 1):
-            tests.append('<div id=test{}>'.format(i + 50) +
+            tests.append('<div class="test" id={}>'.format(i+1) +
                          '<label for="#inp{}"> {} </label>'.format(i + 1, i + 1) +
-                         '<input type="text" name="inp{}" id="{}" value="{}">'.format(i + 50, i + 50, str(inputs[i])) +
-                         '<input type="text" name="out{}" id="out{}" value={}>'.format(i + 50, i + 50,
-                                                                                       str(outputs[i])) + '</div><br>')
+                         '<input type="text" name="inp{}" id="{}" value="{}" class="tinp">'.format(i+1, i+1, str(inputs[i])) +
+                         '<input type="text" name="out{}" id="out{}" value={} class="tout">'.format(i+1, i+1,
+                                                                                       str(outputs[i])) + '</div>')
 
         return render(request, 'addtask.html', {'editMode': True, 'id': taskid, 'task': task,
                                                 'tests': tests, 'categories': themes.getThemes(),
@@ -228,3 +234,16 @@ def updatethemes(request):
        return HttpResponse('OK')
     else:
         return HttpResponseRedirect('/')
+
+def tasktheme(request):
+    id = request.GET.get('id')
+    loctheme = themes.getThemes()
+    taskftheme = tasks.objects.filter(category=loctheme[int(id)]['name'])
+    print(taskftheme)
+    context = {
+        "themename": loctheme[int(id)]['name'],
+        "tasks": taskftheme,
+        'name': request.session['name'],
+        'surname': request.session['surname']
+    }
+    return render(request, "themepage.html", context)

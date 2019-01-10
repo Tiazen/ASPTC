@@ -32,18 +32,19 @@ $(document).ready(function(){
 
     var del = ''
     var inp = ''
-    var count = 0
+    var count = $('.test').length
 
-    var field = ['#id_taskName', '#id_textdescription', '#1', '#out1']
+    var field = ['#id_taskName', '#id_textdescription', '#1', '#out1', 'category']
     function updateInp(){
-        count += 1;
+        count++;
         del = '<a onclick="deleteTest(' + count + ')" style="font-size: 28px; margin-left: 8px; top: 2px;">&times;</a>'
-        inp = '<div id="test' + count + '"><label for="#inp' + count + '">' + count + '</label><input type="text" name="inp' + count + '" id="' + count + '"><input type="text" name="out' + count + '" id="out' + count + '">' + del + '<br></div>';
+        inp = '<div class="test" id="' + count + '"><label for="#inp' + count + '">' + count + '</label><input class="tinp" type="text" name="inp' + count + '" id="' + count + '"><input type="text" class="tout" name="out' + count + '" id="out' + count + '">' + del + '<br></div>';
     }
 
     function check() {
         var f = false
-        for (var i=0; i<4; ++i) {
+
+        for (var i=0; i<5; ++i) {
             if ($(field[i]).val() == '') {
                 $(field[i]).css("border", "1px solid red")
                 f = true;
@@ -71,10 +72,15 @@ $(document).ready(function(){
         var taskname = $("#id_taskName").val();
         var taskDesc = $("#id_textdescription").val();
         var category = $('#category').val()
-        for(var i=1; i < 50; ++i) {
-            if ($('#'+i).val() !== undefined) {
-                inpVars += $('#'+i).val() + ',';
-                outVars += $('#out'+i).val() + ','
+
+        var allinp = $('.tinp')
+        var allout = $('.tout')
+
+        for(var i=1; i < count; ++i) {
+            if ($(allinp[i]).val() !== undefined && $(allout[i]).val() !== undefined) {
+                console.log('i')
+                inpVars += $(allinp[i]).val() + ','
+                outVars += $(allout[i]).val() + ','
             }
         }
 
@@ -100,10 +106,14 @@ $(document).ready(function(){
         var id = $("#id").val();
         var category = $('#category').val()
 
-        for(var i=1; i < 100; ++i) {
-            if ($('#'+i).val() !== undefined) {
-                inpVars += $('#'+i).val() + ',';
-                outVars += $('#out'+i).val() + ','
+        var allinp = $('.tinp')
+        var allout = $('.tout')
+
+        for(var i=0; i < count; ++i) {
+            if ($(allinp[i]).val() !== undefined && $(allout[i]).val() !== undefined) {
+                console.log('i')
+                inpVars += $(allinp[i]).val() + ','
+                outVars += $(allout[i]).val() + ','
             }
         }
 
@@ -111,7 +121,9 @@ $(document).ready(function(){
             url: '/edittask/',
             type: 'POST',
             data: 'id=' + id + '&taskname=' + taskname + '&taskdesc=' + taskDesc + '&inputs=' + inpVars + '&outputs=' + outVars + '&category=' + category,
-
+            success: function(){
+                window.location.replace('/')
+            }
         });
     });
 });

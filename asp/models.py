@@ -8,6 +8,8 @@ class tasks(models.Model):
     inputs = models.CharField(max_length=300)
     outputs = models.CharField(max_length=300)
     category = models.CharField(max_length=300)
+    testin = models.CharField(max_length=300, default='тест не найден')
+    testout = models.CharField(max_length=300, default='тест не найден')
 
 class Users(models.Model):
     login = models.CharField(max_length=100, unique=True)
