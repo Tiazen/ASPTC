@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 # Create your models here.
 
 
@@ -19,4 +20,10 @@ class Users(models.Model):
     degree = models.IntegerField()
     letter = models.CharField(max_length=3)
     role = models.CharField(max_length=20, default="student")
-    donetask = models.ManyToManyField(tasks)
+
+class Solution(models.Model):
+    time = models.DateTimeField(default=datetime.datetime.now())
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, default=None)
+    points = models.IntegerField()
+    status = models.CharField(max_length=50)
+    file = models.FileField(default=None)

@@ -5,8 +5,9 @@ from django.db import models
 # Create your views here.
 
 from asp import themes
-from asp.models import Users, tasks
-from asp.myforms import registForm, loginForm, addtaskForm
+from asp.models import Users, tasks, Solution
+from asp.myforms import registForm, loginForm, addtaskForm, uploadForm
+from asp.testSystem import runtests
 
 
 def checkAuth(request):
@@ -142,6 +143,7 @@ def login(request):
                 request.session['name'] = m.name
                 request.session['surname'] = m.surname
                 request.session['role'] = m.role
+                request.session['uid'] = m.id
                 return HttpResponseRedirect('/')
         except models.ObjectDoesNotExist:
             form = loginForm()
@@ -239,17 +241,22 @@ def tasktheme(request):
     id = request.GET.get('id')
     loctheme = themes.getThemes()
     taskftheme = tasks.objects.filter(category=loctheme[int(id)]['name'])
-    print(taskftheme)
+    upload = uploadForm()
     context = {
         "themename": loctheme[int(id)]['name'],
         "tasks": taskftheme,
         'name': request.session['name'],
-        'surname': request.session['surname']
+        'surname': request.session['surname'],
+        'form': upload,
     }
     return render(request, "themepage.html", context)
 
 def saveFile(request):
     if request.method == "POST":
-        file = request.FILES
-        print(file)
-        return HttpResponse(file)
+        form = uploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            user = Users.objects.get(id=request.session['uid'])
+            record = Solution(status="CH", file=request.FILES['file'], points=0, user=user)
+            record.save()
+            runtests(request.FILES['file'])
+            return HttpResponse(request.FILES['file'])

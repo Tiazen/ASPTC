@@ -41,7 +41,7 @@
                     <h4>Загрузка решения</h4>
                     <form enctype="multipart/form-data" method="post" id="fileform{{ i.id }}" action="/loadfile/">
                         {% csrf_token %}
-                        <input type="file" id="file{{ i.id }}">
+                        {{ form.file }}
                         <button type="submit" class="btn btn-success" onclick="test()">Отправить</button>
                     </form>
                 </div>

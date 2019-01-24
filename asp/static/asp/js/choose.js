@@ -76,7 +76,7 @@ $(document).ready(function(){
         var allinp = $('.tinp')
         var allout = $('.tout')
 
-        for(var i=1; i < count; ++i) {
+        for(var i=0; i < count; ++i) {
             if ($(allinp[i]).val() !== undefined && $(allout[i]).val() !== undefined) {
                 console.log('i')
                 inpVars += $(allinp[i]).val() + ','
