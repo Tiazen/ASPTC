@@ -242,12 +242,21 @@ def tasktheme(request):
     loctheme = themes.getThemes()
     taskftheme = tasks.objects.filter(category=loctheme[int(id)]['name'])
     upload = uploadForm()
+    solutions = Solution.objects.filter(user=get_cuid(request))
+
+    taskAndSol = []        #(task, solution)
+
+    for i in range(len(taskftheme)):
+        taskAndSol.append((taskftheme[i], solutions.filter(task=taskftheme[i].id)))
+
     context = {
         "themename": loctheme[int(id)]['name'],
         "tasks": taskftheme,
         'name': request.session['name'],
         'surname': request.session['surname'],
         'form': upload,
+        'solutions': solutions,
+        'test': taskAndSol
     }
     return render(request, "themepage.html", context)
 
@@ -255,8 +264,13 @@ def saveFile(request):
     if request.method == "POST":
         form = uploadForm(request.POST, request.FILES)
         if form.is_valid():
-            user = Users.objects.get(id=request.session['uid'])
-            record = Solution(status="CH", file=request.FILES['file'], points=0, user=user)
+            user = get_cuid(request)
+            record = Solution(status="CH", file=request.FILES['file'], points=0, user=user, task=request.POST['task_id'])
             record.save()
-            runtests(request.FILES['file'])
-            return HttpResponse(request.FILES['file'])
+            record_task = tasks.objects.get(id=request.POST['task_id'])
+            runtests(request.FILES['file'], record_task, record)
+            return HttpResponseRedirect('/')
+
+
+def get_cuid(request):
+    return Users.objects.get(id=request.session['uid'])

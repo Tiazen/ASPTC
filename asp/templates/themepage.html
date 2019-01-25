@@ -17,35 +17,67 @@
             margin-left: 52px;
             }
     </style>
-    {% for i in tasks %}
+    {% for i in test %}
         <div class="task">
             <div class="row" id="{{ i.id }}">
                 <div class="col">
-                    <h3>Название: {{ i.taskname }}</h3>
-                    <p>Описание: <br> {{ i.taskdesc }}</p>
+                    <h3>Название: {{ i.0.taskname }}</h3>
+                    <p>Описание: <br> {{ i.0.taskdesc }}</p>
                 </div>
             </div>
             <h4>Пример тестирования</h4>
             <div class="row">
                 <div class="col-2">
                     <h4>Входные данные</h4>
-                    {{ i.testin }}
+                    {{ i.0.testin }}
                 </div>
                 <div class="col-2">
                     <h4>Выходные данные</h4>
-                    {{ i.testout }}
+                    {{ i.0.testout }}
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <h4>Загрузка решения</h4>
                     <form enctype="multipart/form-data" method="post" id="fileform{{ i.id }}" action="/loadfile/">
+                        <input type="hidden" name="task_id" value="{{ i.0.id }}">
                         {% csrf_token %}
                         {{ form.file }}
                         <button type="submit" class="btn btn-success" onclick="test()">Отправить</button>
                     </form>
                 </div>
             </div>
+            <div class="row">
+                <div class="col">
+                    <h4>Отправленные решения</h4>
+                </div>
+            </div>
+            {% if solutions %}
+            <div class="row">
+                <div class="col-8">
+                <table class="table table-sm">
+                    <thead>
+                    <th scope="col">#</th>
+                    <th scope="col">Язык</th>
+                    <th scope="col">Время</th>
+                    <th scope="col">Результат</th>
+                    <th scope="col">Баллы</th>
+                    </thead>
+                    <tbody>
+                    {% for j in i.1 %}
+                        <tr>
+                            <th scope="row"> {{ j.id }}</th>
+                            <th> {{ j.lang }}</th>
+                            <th> {{ j.time }}</th>
+                            <th> {{ j.status  }}</th>
+                            <th> {{ j.points }}</th>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            {% endif %}
         </div>
     {% endfor %}
 {% endblock %}

@@ -24,6 +24,8 @@ class Users(models.Model):
 class Solution(models.Model):
     time = models.DateTimeField(default=datetime.datetime.now())
     user = models.ForeignKey(Users, on_delete=models.CASCADE, default=None)
+    task = models.IntegerField(default=0)
     points = models.IntegerField()
     status = models.CharField(max_length=50)
     file = models.FileField(default=None)
+    lang = models.CharField(max_length=100, default="Python 3.7.0")
