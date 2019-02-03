@@ -29,3 +29,4 @@ class Solution(models.Model):
     status = models.CharField(max_length=50)
     file = models.FileField(default=None)
     lang = models.CharField(max_length=100, default="Python 3.7.0")
+    tests = models.CharField(max_length=100, default="0")

@@ -1,13 +1,19 @@
-import os, subprocess
+import os, subprocess, sys
 
 from ascpt import settings
 
 
 def runcmd(com, par):
-    x = subprocess.Popen(com, stdout=subprocess.PIPE, stdin=subprocess.PIPE, shell=True)
+    print('exe', sys.executable)
+    print('py' + ' ' + com)
     data = bytes(par, 'utf-8')
-    result = x.communicate(input=data, timeout=1)
-    return result
+    x = subprocess.Popen(['C:\\Users\\Tiazz0\\AppData\\Local\\Programs\\Python\\Python36\\python.exe', str(com)], stdout=subprocess.PIPE, stdin=subprocess.PIPE, shell=True)
+    print(x)
+    try:
+        result = x.communicate(input=data, timeout=1)
+        return result
+    except subprocess.TimeoutExpired:
+        x.kill()
 
 
 def runtests(filename, record_task, record_test):
@@ -20,6 +26,7 @@ def runtests(filename, record_task, record_test):
     test_output.pop(-1)
 
     test_result = []
+    tt = []
     for i in range(len(test_inputs)):
         a = runcmd(file_path, test_inputs[i])
         print(test_inputs[i], a[0])
@@ -40,9 +47,12 @@ def runtests(filename, record_task, record_test):
     if points == 100:
         record_test.points = points
         record_test.status = "OK"
+        record_test.tests = str(test_result)
+
     elif points < 100:
         record_test.points = points
         record_test.status = "PS"
+        record_test.tests = str(test_result)
 
     record_test.save()
 

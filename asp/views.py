@@ -78,7 +78,6 @@ def gettasklist(request):
     resp = createTaskList()
     return HttpResponse(resp)
 
-
 def getclasslist(request):
     degree = request.POST['degree']
     letter = request.POST['letter']
@@ -86,8 +85,8 @@ def getclasslist(request):
 
     resp = '<table><tr><th>№</th><th>Фамилия</th><th>Имя</th><td>Выполненные задания</td></tr>'
     if len(all) != 0:
+        count = 1
         for i in all:
-            count = 1
             resp += '<tr><td>{}</td><td>{}</td><td>{}</td><td><a href="stats?id={}">Выполненные задания</a></td><tr>'.format(
                 count, i.name, i.surname, i.id)
             count += 1
@@ -109,8 +108,9 @@ def stat(request):
 
 def registuser(request):
     if request.method == 'POST':
+        print(0)
         f = registForm(request.POST)
-
+        print(f.is_valid())
         if f.is_valid():
             login = f.data['login']
             password = f.data['passw']
@@ -126,12 +126,13 @@ def registuser(request):
                 record.save()
                 return HttpResponseRedirect('/')
             except IntegrityError:
-                return render(request, 'registration.html', {'error': True, 'form': f})
-
+                return render(request, 'registration.html', {'error': "Такой пользователь уже существует.", 'form': f})
+        else:
+            return render(request, 'registration.html', {'error': "fuck", 'form': f})
     else:
+        print(1)
         form = registForm()
-
-    return render(request, 'registration.html', {'form': form})
+        return render(request, 'registration.html', {'form': form})
 
 
 def login(request):
@@ -240,7 +241,7 @@ def updatethemes(request):
 def tasktheme(request):
     id = request.GET.get('id')
     loctheme = themes.getThemes()
-    taskftheme = tasks.objects.filter(category=loctheme[int(id)]['name'])
+    taskftheme = tasks.objects.all().filter(category=loctheme[int(id)]['name'])
     upload = uploadForm()
     solutions = Solution.objects.filter(user=get_cuid(request))
 
@@ -256,8 +257,9 @@ def tasktheme(request):
         'surname': request.session['surname'],
         'form': upload,
         'solutions': solutions,
-        'test': taskAndSol
+        'test': taskAndSol,
     }
+
     return render(request, "themepage.html", context)
 
 def saveFile(request):
@@ -268,7 +270,7 @@ def saveFile(request):
             record = Solution(status="CH", file=request.FILES['file'], points=0, user=user, task=request.POST['task_id'])
             record.save()
             record_task = tasks.objects.get(id=request.POST['task_id'])
-            runtests(request.FILES['file'], record_task, record)
+            runtests(record.file, record_task, record)
             return HttpResponseRedirect('/')
 
 
