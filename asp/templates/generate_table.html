@@ -1,0 +1,15 @@
+<table class="table">
+    <tr>
+        <th>№</th>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <td>Выполненные задания</td>
+    </tr>
+    {% for i in all %}
+    <tr>
+        <td>{{ i.0 }}</td>
+        <td>{{ i.1.name }}</td>
+        <td>{{ i.1.surname}}</td>
+        <td><a href="stats?id={{ i.1.id }}">Выполненные задания</a></td><tr>
+    {% endfor %}
+</table>

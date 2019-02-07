@@ -6,17 +6,23 @@
 {% endblock %}
 
 {% block leftmenu %}
-    {% for i in tasks %}
-    <a href="#{{ i.id }}" style="color: white; font-size: 24px;">{{ i.taskname }}</a><br>
-    {% endfor %}
+<div class="col-sm-2 col-md-2 sidebar bg-dark" id="menu">
+<a href="/" class="navbar-brand" id="sysname">АСПЗПП</a>
+        <div class="row">
+            <div class="col-12"><h4>{{ name }} {{ surname }}</h4>
+            <a class="h6" href="/logout/" style="line-height: 18px;">Выход</a></div>
+        </div>
+    <h3>Задачи</h3>
+    <ul class="nav nav-sidebar">
+        {% for i in tasks %}
+            <li><a href="#{{ i.id }}" style="color: white; font-size: 24px;">{{ i.taskname }}</a><br></li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
 
 {% block content %}
-    <style>
-        .task {
-            margin-left: 52px;
-            }
-    </style>
+    <div class="col-11">
     {% for i in test %}
         <div class="task">
             <div class="row" id="{{ i.id }}">
@@ -81,4 +87,5 @@
             {% endif %}
         </div>
     {% endfor %}
+        </div>
 {% endblock %}

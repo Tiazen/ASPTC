@@ -5,8 +5,15 @@
 {% endblock %}
 {% block title %}Панель учителя{% endblock %}
 {% block leftmenu %}
-            <h3 id="classes">Классы</h3>
-            <select id="num">
+    <div class="col-sm-2 col-md-2 sidebar bg-dark" id="menu">
+        <a href="/" class="navbar-brand" id="sysname">АСПЗПП</a>
+        <div class="row">
+            <div class="col-12"><h4>{{ name }} {{ surname }}</h4>
+            <a class="h6" href="/logout/" style="line-height: 18px;">Выход</a></div>
+        </div>
+        <h3 id="classes">Классы</h3>
+        <div class="row">
+            <select id="num" class="form-control col-4" style="margin-right: 10px; margin-left: 15px;">
                 <option value="5">5</option>
                 <option value="6">6</option>
                 <option value="7">7</option>
@@ -15,22 +22,27 @@
                 <option value="10">10</option>
                 <option value="11">11</option>
             </select>
-            <select id="letter">
+            <select id="letter" class="form-control col-4">
                 <option value="А">А</option>
                 <option value="Б">Б</option>
                 <option value="В">В</option>
                 <option value="Г">Г</option>
                 <option value="Д">Д</option>
                 <option value="Е">Е</option>
-            </select><br>
+            </select>
+            </div>
             <a id="apply">Применить</a>
             <h3 id="tasks">Задания</h3>
             <h3 id="settings">Настройки</h3>
+
+        </div>
 {% endblock %}
 {%  block content %}
-            <div id="filter" style="margin-left: 52px;">{% include 'upBar.html' %}</div>
+    <div class="col">
+            <div id="filter">{% include 'upBar.html' %}</div>
             <div id="className"></div>
             <div id="studentTable"></div>
             <div id="tasklist"></div>
             <div id="setcon"></div>
+        </div>
 {% endblock %}

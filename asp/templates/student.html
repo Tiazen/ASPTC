@@ -6,6 +6,17 @@
         <script type="text/javascript" src="{% static 'asp/js/student.js' %}"></script>
 {% endblock %}
 {% csrf_token %}
+
+{%block leftmenu %}
+<div class="col-sm-2 col-md-2 sidebar bg-dark" id="menu">
+<a href="/" class="navbar-brand" id="sysname">АСПЗПП</a>
+        <div class="row">
+            <div class="col-12"><h4>{{ name }} {{ surname }}</h4>
+            <a class="h6" href="/logout/" style="line-height: 18px;">Выход</a></div>
+        </div>
+</div>
+{% endblock %}
+
 {% block content %}
             <div id="themes">
                 <style>

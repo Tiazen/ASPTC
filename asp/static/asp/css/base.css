@@ -1,0 +1,29 @@
+html, body {
+    height: 100%;
+}
+
+#menu {
+    color: white;
+}
+
+#sysname {
+    font-size: 38px;
+    color: white;
+}
+
+#apply {
+    font-size: 22px;
+}
+#apply:hover {
+    color: red;
+}
+
+.task {
+    font-family: 'Roboto Condensed', sans-serif;
+    padding: 16px;
+    width: 100%;
+    border: 1px solid #ddd;
+    background-color: #asd;
+    margin-top: 10px;
+    border-radius: 3px;
+}

@@ -83,15 +83,11 @@ def getclasslist(request):
     degree = request.POST['degree']
     letter = request.POST['letter']
     all = Users.objects.filter(degree=degree, letter=letter)
-
-    resp = '<table><tr><th>№</th><th>Фамилия</th><th>Имя</th><td>Выполненные задания</td></tr>'
+    pupil_list = []
     if len(all) != 0:
-        count = 1
-        for i in all:
-            resp += '<tr><td>{}</td><td>{}</td><td>{}</td><td><a href="stats?id={}">Выполненные задания</a></td><tr>'.format(
-                count, i.name, i.surname, i.id)
-            count += 1
-        resp += '</table>'
+        for i in range(len(all)):
+            pupil_list.append((i+1, all[i]))
+        resp = render(request, 'generate_table.html', {'all': pupil_list})
         return HttpResponse(resp)
     else:
         return HttpResponse('Nothing')
@@ -134,13 +130,16 @@ def login(request):
     if request.method == "POST":
         try:
             m = Users.objects.get(login=request.POST['login'])
-
+            print(check_password(request.POST['password'], m.password))
             if check_password(request.POST['password'], m.password):
                 request.session['name'] = m.name
                 request.session['surname'] = m.surname
                 request.session['role'] = m.role
                 request.session['uid'] = m.id
                 return HttpResponseRedirect('/')
+            else:
+                form = loginForm()
+                return render(request, 'login_page.html', {'form': form, 'error': True})
         except models.ObjectDoesNotExist:
             form = loginForm()
             return render(request, 'login_page.html', {'form': form, 'error': True})
