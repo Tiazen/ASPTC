@@ -20,14 +20,14 @@
     <label for="password" class="sr-only">Login</label>
     {{ form.password }}
     <input type="submit" class="btn btn-lg btn-success btn-block" value="Вход"><br>
-
+    {% if error %}
+    <h2>Неправильный логин или пароль</h2>
+    {% endif %}
     <a href="/regist" style="font-size: 18px;" class="font-weight-normal">Регистрация</a>
 </form>
 <br>
 
-{% if error %}
-    <h2>Неправильный логин или пароль</h2>
-{% endif %}
+
 
 
 </body>

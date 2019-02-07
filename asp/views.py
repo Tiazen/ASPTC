@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password, check_password
 from django.db import IntegrityError
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
@@ -108,29 +109,23 @@ def stat(request):
 
 def registuser(request):
     if request.method == 'POST':
-        print(0)
         f = registForm(request.POST)
-        print(f.is_valid())
-        if f.is_valid():
-            login = f.data['login']
-            password = f.data['passw']
-            name = f.data['name']
-            surname = f.data['surname']
-            degree = f.data['degree']
-            letter = f.data['letter']
+        login = f.data['login']
+        password = make_password(password=f.data['passw'], hasher='md5')
+        name = f.data['name']
+        surname = f.data['surname']
+        degree = f.data['degree']
+        letter = f.data['letter']
 
-            record = Users(login=login, password=password, name=name, surname=surname,
+        record = Users(login=login, password=password, name=name, surname=surname,
                            letter=letter, degree=degree)
 
-            try:
-                record.save()
-                return HttpResponseRedirect('/')
-            except IntegrityError:
-                return render(request, 'registration.html', {'error': "Такой пользователь уже существует.", 'form': f})
-        else:
-            return render(request, 'registration.html', {'error': "fuck", 'form': f})
+        try:
+            record.save()
+            return HttpResponseRedirect('/')
+        except IntegrityError:
+            return render(request, 'registration.html', {'error': "Такой пользователь уже существует.", 'form': f})
     else:
-        print(1)
         form = registForm()
         return render(request, 'registration.html', {'form': form})
 
@@ -140,7 +135,7 @@ def login(request):
         try:
             m = Users.objects.get(login=request.POST['login'])
 
-            if m.password == request.POST['password']:
+            if check_password(request.POST['password'], m.password):
                 request.session['name'] = m.name
                 request.session['surname'] = m.surname
                 request.session['role'] = m.role
@@ -258,20 +253,20 @@ def tasktheme(request):
         'form': upload,
         'solutions': solutions,
         'test': taskAndSol,
+        'theme_id': id,
     }
-
     return render(request, "themepage.html", context)
 
 def saveFile(request):
     if request.method == "POST":
-        form = uploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            user = get_cuid(request)
-            record = Solution(status="CH", file=request.FILES['file'], points=0, user=user, task=request.POST['task_id'])
-            record.save()
-            record_task = tasks.objects.get(id=request.POST['task_id'])
-            runtests(record.file, record_task, record)
-            return HttpResponseRedirect('/')
+        page = request.POST['theme_id']
+        user = get_cuid(request)
+        record = Solution(status="CH", file=request.FILES['file'], points=0, user=user, task=request.POST['task_id'])
+        record.save()
+        record_task = tasks.objects.get(id=request.POST['task_id'])
+        runtests(record.file, record_task, record)
+
+        return HttpResponseRedirect('/tasktheme/?id=' + page)
 
 
 def get_cuid(request):

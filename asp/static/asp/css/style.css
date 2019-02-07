@@ -88,6 +88,10 @@ a {
 
 }
 
+#settings:hover {
+    color: red;
+}
+
 #setcon {
     margin-left: 50px;
 }
