@@ -17,8 +17,6 @@ def runcmd(com, par):
 
 
 def runtests(filename, record_task, record_test):
-    file_path = settings.MEDIA_ROOT + '\\' + str(filename)
-
     test_inputs = record_task.inputs.split(',')
     test_inputs.pop(-1)
 
@@ -27,8 +25,9 @@ def runtests(filename, record_task, record_test):
 
     test_result = []
     tt = []
+
     for i in range(len(test_inputs)):
-        a = runcmd(file_path, test_inputs[i])
+        a = runcmd(filename, test_inputs[i])
         print(test_inputs[i], a[0])
         err = a[1]
         if err is None and a[0].decode('utf-8').strip() == test_output[i].strip():
@@ -40,9 +39,7 @@ def runtests(filename, record_task, record_test):
 
     points = 100
     if 0 in test_result:
-        points = 100 - test_result.count(0)*(100//len(test_inputs))
-        if points < 0:
-            points = 0
+        points = test_result.count(1)
 
     if points == 100:
         record_test.points = points

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Профиль{% endblock %}
+{% block leftmenu %}
+<div class="col-sm-2 col-md-2 sidebar bg-dark position-fixed" id="menu" style="height: 100%;">
+        <a href="/" class="navbar-brand" id="sysname">АСПЗПП</a>
+        <div class="row">
+            <div class="col-12">
+                <a href="/" style="font-size: 22px; color: white;">Назад</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+<div class="col-11">
+<h4>{{name}} {{surname}}</h4>
+<h5>Сменить пароль</h5>
+<form method="post" action="/changepass/" class="col-4">
+    {% csrf_token %}
+    <style>input { margin-bottom: 10px; }</style>
+    <input class="form-control" type="password" name="old" placeholder="Старый пароль">
+    <input class="form-control" type="password" name="new" placeholder="Новый пароль">
+    <input class="form-control" type="password" name="rnew" placeholder="Повторите пароль">
+    <button type="submit" class="btn btn-success">Изменить пароль</button>
+</form>
+    {{ error }}
+</div>
+{% endblock %}

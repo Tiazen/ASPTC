@@ -4,13 +4,13 @@ import datetime
 
 
 class tasks(models.Model):
-    taskname = models.CharField(max_length=100, unique=True)
-    taskdesc = models.CharField(max_length=600)
-    inputs = models.CharField(max_length=300)
-    outputs = models.CharField(max_length=300)
+    taskname = models.CharField(max_length=150, unique=True)
+    taskdesc = models.CharField(max_length=1000)
+    inputs = models.CharField(max_length=5000)
+    outputs = models.CharField(max_length=5000)
     category = models.CharField(max_length=300)
-    testin = models.CharField(max_length=300, default='тест не найден')
-    testout = models.CharField(max_length=300, default='тест не найден')
+    testin = models.CharField(max_length=1200, default='тест не найден')
+    testout = models.CharField(max_length=1200, default='тест не найден')
 
 class Users(models.Model):
     login = models.CharField(max_length=100, unique=True)
@@ -24,9 +24,9 @@ class Users(models.Model):
 class Solution(models.Model):
     time = models.DateTimeField(default=datetime.datetime.now())
     user = models.ForeignKey(Users, on_delete=models.CASCADE, default=None)
-    task = models.IntegerField(default=0)
+    task = models.ForeignKey(tasks, on_delete=models.CASCADE, default=None)
     points = models.IntegerField()
     status = models.CharField(max_length=50)
     file = models.FileField(default=None)
     lang = models.CharField(max_length=100, default="Python 3.7.0")
-    tests = models.CharField(max_length=100, default="0")
+    tests = models.CharField(max_length=2500, default="0")

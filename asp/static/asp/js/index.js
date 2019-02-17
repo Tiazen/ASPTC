@@ -121,3 +121,27 @@ function addtheme() {
         $('#newtheme').css('border', '1px solid red')
      }
 }
+
+function showCode(n) {
+    $('#tr'+n).toggle()
+    $.ajax({
+        url: '/getcode/',
+        type: 'POST',
+        data: 'solution=' + n,
+        success: function(resp) {
+              $('#code' + n).html(resp)
+            }
+    });
+    }
+
+function showTests(n) {
+    $('#tr'+n).toggle()
+        $.ajax({
+        url: '/gettests/',
+        type: 'POST',
+        data: 'solution=' + n,
+        success: function(resp) {
+              $('#code' + n).html(resp)
+            }
+    });
+}

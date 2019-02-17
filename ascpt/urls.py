@@ -38,6 +38,12 @@ urlpatterns = [
     path('updatethemes/', views.updatethemes),
     path('tasktheme/', views.tasktheme),
     path('loadfile/', views.saveFile),
+    path('deletetask', views.deleteTask),
+    path('getcode/', views.getcode),
+    path('gettests/', views.gettests),
+    path('profile/', views.profile),
+    path('changepass/', views.changepass)
+
 
 ]
 

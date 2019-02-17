@@ -18,6 +18,14 @@ html, body {
     color: red;
 }
 
+#tasks:hover {
+    color: red;
+}
+
+#settings:hover {
+    color: red;
+}
+
 .task {
     font-family: 'Roboto Condensed', sans-serif;
     padding: 16px;
