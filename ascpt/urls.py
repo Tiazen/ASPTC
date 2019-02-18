@@ -42,7 +42,7 @@ urlpatterns = [
     path('getcode/', views.getcode),
     path('gettests/', views.gettests),
     path('profile/', views.profile),
-    path('changepass/', views.changepass)
+    path('changepass/', views.changepass),
 
 
 ]

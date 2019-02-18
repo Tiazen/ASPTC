@@ -39,11 +39,15 @@
             <div class="row">
                 <div class="col-2">
                     <h4>Входные данные</h4>
+                    {% autoescape off %}
                     {{ i.0.testin }}
+                    {% endautoescape %}
                 </div>
                 <div class="col-2">
                     <h4>Выходные данные</h4>
+                    {% autoescape off %}
                     {{ i.0.testout }}
+                    {% endautoescape %}
                 </div>
             </div>
             <div class="row">

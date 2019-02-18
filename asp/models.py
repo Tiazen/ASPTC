@@ -14,11 +14,11 @@ class tasks(models.Model):
 
 class Users(models.Model):
     login = models.CharField(max_length=100, unique=True)
-    password = models.CharField(max_length=100)
+    password = models.CharField(max_length=500)
     name = models.CharField(max_length=100)
     surname = models.CharField(max_length=100)
     degree = models.IntegerField()
-    letter = models.CharField(max_length=3)
+    letter = models.CharField(max_length=5)
     role = models.CharField(max_length=20, default="student")
 
 class Solution(models.Model):

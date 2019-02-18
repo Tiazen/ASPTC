@@ -1,3 +1,4 @@
+var count = $('.test').length + 1
 $(document).ready(function(){
     function getCookie(name) {
     var cookieValue = null;
@@ -32,13 +33,23 @@ $(document).ready(function(){
 
     var del = ''
     var inp = ''
-    var count = $('.test').length
+
 
     var field = ['#id_taskName', '#id_textdescription', '#1', '#out1', 'category']
     function updateInp(){
         count++;
-        del = '<a onclick="deleteTest(' + count + ')" style="font-size: 28px; margin-left: 8px; top: 2px;">&times;</a>'
-        inp = '<div class="test" id="' + count + '"><label for="#inp' + count + '">' + count + '</label><input class="tinp" type="text" name="inp' + count + '" id="' + count + '"><input type="text" class="tout" name="out' + count + '" id="out' + count + '">' + del + '<br></div>';
+        del = '<a onclick="deleteTest(' + count + ')" style="font-size: 28px; margin-top: -5px;">&times;</a>'
+        inp = '<div id="test' + count + '" class="test" style="margin-bottom: 7px;">' +
+                    '<div class="row">' +
+                        '<div class="col-1"><label for="#inp' + count + '">' + count + '</label></div>' +
+                        '<div class="col-5">' +
+                            '<input type="text" name="inp' + count + '" id="' + count + '" class="tinp form-control" required>' +
+                         '</div>' +
+                        '<div class="col-5">' +
+                            '<input type="text" name="out' + count + '" id="out' + count + '" class="tout form-control" required>' +
+                        '</div>' +
+                         del +
+                        '</div></div>'
     }
 
     function check() {
@@ -69,8 +80,8 @@ $(document).ready(function(){
      $('#send').click(function(event) {
         var inpVars = ''
         var outVars = ''
-        var taskname = $("#id_taskName").val();
-        var taskDesc = $("#id_textdescription").val();
+        var taskname = $("#id_taskname").val();
+        var taskDesc = $("#id_taskdescription").val();
         var category = $('#category').val()
 
         var allinp = $('.tinp')
@@ -101,8 +112,8 @@ $(document).ready(function(){
     $('#edit').click(function(event) {
         var inpVars = ''
         var outVars = ''
-        var taskname = $("#id_taskName").val();
-        var taskDesc = $("#id_textdescription").val();
+        var taskname = $("#id_taskname").val();
+        var taskDesc = $("#id_taskdescription").val();
         var id = $("#id").val();
         var category = $('#category').val()
 
@@ -127,3 +138,15 @@ $(document).ready(function(){
         });
     });
 });
+
+function deleteTest(d){
+        count -= 1;
+       $('#test'+d).remove();
+        }
+
+
+
+function change(f,a) {
+    $('#'+a).html($('#'+f).val())
+}
+

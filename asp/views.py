@@ -211,16 +211,17 @@ def addtask(request):
     if isAdmin(request):
         if request.method == 'POST':
             s = request.POST
+            print(s['inputs'].split(','))[0].replace('\\n', '<br>')
             recordTask = tasks(taskname=s['taskname'], taskdesc=s['taskdesc'], inputs=s['inputs'], outputs=s['outs'],
-                               category=s['category'], testin=(s['inputs'].split(','))[0],
-                               testout=(s['outs'].split(','))[0])
+                               category=s['category'], testin=(s['inputs'].split(','))[0].replace('\\n', '<br>'),
+                               testout=(s['outs'].split(','))[0].replace('\\n', '<br>'))
             recordTask.save()
 
             return HttpResponse('OK')
         else:
             form = addtaskForm()
 
-            return render(request, 'addtask.html', {'form': form, 'addMode': True,
+            return render(request, 'addtask.html', {'form': form,
                                                     'categories': themes.getThemes()})
     else:
         return HttpResponseRedirect('/')
@@ -236,8 +237,9 @@ def edittask(request):
             outputs = s['outputs']
             id = s['id']
             cate = s['category']
-            testin = (inputs.split(','))[0]
-            testout = (outputs.split(','))[0]
+            testin = bytes((inputs.split(','))[0], 'utf-8').replace(b'\n', bytes('<br>', 'utf-8')).decode('utf-8')
+            testout = bytes((outputs.split(','))[0], 'utf-8').replace(b'\n', bytes('<br>', 'utf-8')).decode('utf-8')
+
 
             sel = tasks.objects.get(id=id)
             sel.taskname = taskname
@@ -259,17 +261,25 @@ def edittask(request):
             tests = []
 
             for i in range(len(inputs) - 1):
-                tests.append('<div class="test" id={}>'.format(i + 1) +
-                             '<label for="#inp{}"> {} </label>'.format(i + 1, i + 1) +
-                             '<input type="text" name="inp{}" id="{}" value="{}" class="tinp">'.format(i + 1, i + 1,
-                                                                                                       str(inputs[i])) +
-                             '<input type="text" name="out{}" id="out{}" value={} class="tout">'.format(i + 1, i + 1,
-                                                                                                        str(outputs[
-                                                                                                                i])) + '</div>')
+                tests.append('''
+                <div id="test{}" class="test" style="margin-bottom: 7px;">
+                        <div class="row">
+                            <div class="col-1"><label for="#inp{}">{}</label></div>
+                            <div class="col-5">
+                                <textarea type="text" name="inp{}" id="in{}" class="tinp form-control" required
+                                        oninput="change('in{}', 'testin')" >{}</textarea>
+                             </div>
+                            <div class="col-5">
+                                <textarea type="text" name="out{}" id="out{}" class="tout form-control" required
+                                oninput="change('out{}', 'testout')" >{}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                '''.format(i+1,i+1,i+1,i+1,i+1,i+1,str(inputs[i]),i+1,i+1,i+1, str(outputs[i])))
 
-            return render(request, 'addtask.html', {'editMode': True, 'id': taskid, 'task': task,
+            return render(request, 'edit.html', {'id': taskid, 'task': task,
                                                     'tests': tests, 'categories': themes.getThemes(),
-                                                    'actualcat': actualcat})
+                                                    'actualcat': actualcat, 'testin': task.testin, 'testout': task.testout})
     else:
         return HttpResponseRedirect('/')
 
@@ -326,7 +336,7 @@ def saveFile(request):
 
         f = request.FILES['file']
         newName = f.name[:f.name.find('.')] + '_{}'.format(record.id) + f.name[f.name.find('.'):]
-        runtests(MEDIA_ROOT + '\\' + user.login + '\\' + newName, record_task, record)
+        runtests(MEDIA_ROOT + '/' + user.login + '/' + newName, record_task, record)
 
         return HttpResponseRedirect('/tasktheme/?id=' + page)
 
@@ -337,12 +347,12 @@ def get_cu(request):
 
 def file_updolad_handler(f, cu, r_id):
     try:
-        os.mkdir(MEDIA_ROOT + '\\' + cu)
+        os.mkdir(MEDIA_ROOT + '/' + cu)
     except FileExistsError:
         pass
 
     newName = f.name[:f.name.find('.')] + '_{}'.format(r_id) + f.name[f.name.find('.'):]
-    os.replace(src=MEDIA_ROOT + '\\' + f.name, dst=MEDIA_ROOT + '\\' + cu + '\\' + newName)
+    os.replace(src=MEDIA_ROOT + '/' + f.name, dst=MEDIA_ROOT + '/' + cu + '/' + newName)
 
 
 def deleteTask(request):
