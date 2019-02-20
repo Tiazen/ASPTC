@@ -131,7 +131,7 @@ def stat(request):
 
 def getcode(request):
     solution = Solution.objects.get(id=request.POST['solution'])
-    solution_path = '{}\{}\{}'.format(MEDIA_ROOT, solution.user.login,
+    solution_path = '{}/{}/{}'.format(MEDIA_ROOT, solution.user.login,
                                           solution.file.name[:solution.file.name.find('.')] + '_{}'.format(request.POST['solution'])
                                           + solution.file.name[solution.file.name.find('.'):])
 

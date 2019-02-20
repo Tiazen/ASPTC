@@ -38,8 +38,7 @@ def runtests(filename, record_task, record_test):
         a = runcmd(filename, test_inputs[i], compiler.needCompilation, compiler.path)
         err = a[1]
         print(bytes(test_inputs[0], 'utf-8'), a[0])
-        if err is None and bytearray(a[0].strip()).replace(b'\r\n', b'\n') == bytearray(bytes(test_output[i], 'utf-8')).replace(b'\\n', b'\n').replace(
-                bytes(' ', 'utf-8'), b''):
+        if err is None and bytearray(a[0].strip()).replace(b'\r\n', b'\n') == bytearray(bytes(test_output[i], 'utf-8')).replace(b'\\n', b'\n').strip():
             print('test {} CORRECT. Found {}, expected {}'.format(i,  a[0], bytes(test_output[i], 'utf-8')))
             test_result.append(1)
         else:
