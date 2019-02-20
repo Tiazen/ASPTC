@@ -43,6 +43,7 @@ urlpatterns = [
     path('gettests/', views.gettests),
     path('profile/', views.profile),
     path('changepass/', views.changepass),
+    path('addcompiler/', views.addcompiler)
 
 
 ]

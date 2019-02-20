@@ -28,5 +28,12 @@ class Solution(models.Model):
     points = models.IntegerField()
     status = models.CharField(max_length=50)
     file = models.FileField(default=None)
-    lang = models.CharField(max_length=100, default="Python 3.7.0")
+    lang = models.CharField(max_length=100, default=None)
     tests = models.CharField(max_length=2500, default="0")
+
+class Compiler(models.Model):
+    name = models.CharField(max_length=128)
+    needCompilation = models.BooleanField()
+    path = models.FilePathField()
+    params = models.CharField(max_length=250, default='')
+    extention = models.CharField(max_length=30, default='')

@@ -53,12 +53,18 @@
             <div class="row">
                 <div class="col">
                     <h4>Загрузка решения</h4>
-                    <form enctype="multipart/form-data" method="post" id="fileform{{ i.id }}" action="/loadfile/">
+                    <form enctype="multipart/form-data" method="post" id="fileform{{ i.id }}" action="/loadfile/" >
                         <input type="hidden" name="task_id" value="{{ i.0.id }}">
                         <input type="hidden" name="theme_id" value="{{ theme_id }}">
+                        <select name="lang" style="margin-right: 12px;">
+                        {% for c in langs %}
+                            <option value="{{ c.name }}" >{{ c.name }}</option>
+                            {% endfor %}
+                        </select>
                         {% csrf_token %}
                         {{ form.file }}
-                        <button type="submit" class="btn btn-success" onclick="test()">Отправить</button>
+                        <br>
+                        <div style="margin-top: 8px;"><button type="submit" class="btn btn-success" onclick="test()">Отправить</button></div>
                     </form>
                 </div>
             </div>

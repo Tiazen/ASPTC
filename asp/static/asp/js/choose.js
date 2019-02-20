@@ -43,10 +43,10 @@ $(document).ready(function(){
                     '<div class="row">' +
                         '<div class="col-1"><label for="#inp' + count + '">' + count + '</label></div>' +
                         '<div class="col-5">' +
-                            '<input type="text" name="inp' + count + '" id="' + count + '" class="tinp form-control" required>' +
+                            '<textarea type="text" name="inp' + count + '" id="' + count + '" class="tinp form-control" required></textarea>' +
                          '</div>' +
                         '<div class="col-5">' +
-                            '<input type="text" name="out' + count + '" id="out' + count + '" class="tout form-control" required>' +
+                            '<textarea type="text" name="out' + count + '" id="out' + count + '" class="tout form-control" required></textarea>' +
                         '</div>' +
                          del +
                         '</div></div>'

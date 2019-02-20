@@ -11,8 +11,8 @@ from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import get_lexer_for_filename
 
 from ascpt.settings import MEDIA_ROOT
-from asp import themes
-from asp.models import Users, tasks, Solution
+from asp import JsonGenerators
+from asp.models import Users, tasks, Solution, Compiler
 from asp.myforms import registForm, loginForm, addtaskForm, uploadForm
 from asp.testSystem import runtests
 
@@ -46,7 +46,7 @@ def index(request):
         context = {
             'name': request.session['name'],
             'surname': request.session['surname'],
-            'themes': themes.getThemes()
+            'themes': JsonGenerators.getThemes()
         }
         return render(request, 'student.html', context)
     else:
@@ -211,7 +211,6 @@ def addtask(request):
     if isAdmin(request):
         if request.method == 'POST':
             s = request.POST
-            print(s['inputs'].split(','))[0].replace('\\n', '<br>')
             recordTask = tasks(taskname=s['taskname'], taskdesc=s['taskdesc'], inputs=s['inputs'], outputs=s['outs'],
                                category=s['category'], testin=(s['inputs'].split(','))[0].replace('\\n', '<br>'),
                                testout=(s['outs'].split(','))[0].replace('\\n', '<br>'))
@@ -222,7 +221,7 @@ def addtask(request):
             form = addtaskForm()
 
             return render(request, 'addtask.html', {'form': form,
-                                                    'categories': themes.getThemes()})
+                                                    'categories': JsonGenerators.getThemes()})
     else:
         return HttpResponseRedirect('/')
 
@@ -278,7 +277,7 @@ def edittask(request):
                 '''.format(i+1,i+1,i+1,i+1,i+1,i+1,str(inputs[i]),i+1,i+1,i+1, str(outputs[i])))
 
             return render(request, 'edit.html', {'id': taskid, 'task': task,
-                                                    'tests': tests, 'categories': themes.getThemes(),
+                                                    'tests': tests, 'categories': JsonGenerators.getThemes(),
                                                     'actualcat': actualcat, 'testin': task.testin, 'testout': task.testout})
     else:
         return HttpResponseRedirect('/')
@@ -286,22 +285,41 @@ def edittask(request):
 
 def returnsettings(request):
     if request.method == "POST":
-        return render(request, 'settings.html', {'themes': themes.getThemes()})
+        return render(request, 'settings.html', {'themes': JsonGenerators.getThemes(),
+                                                 'compilers': Compiler.objects.all()})
     else:
         return HttpResponseRedirect('/')
 
 
 def updatethemes(request):
     if request.method == "POST":
-        themes.updateThemes(request.POST['data'])
+        JsonGenerators.updateThemes(request.POST['data'])
         return HttpResponse('OK')
     else:
         return HttpResponseRedirect('/')
 
 
+def addcompiler(request):
+    if request.method == 'POST':
+        compilerName = request.POST['name']
+        compilationNeed = request.POST.get('compilationNeed')
+        path = request.POST['path'].replace('\\', '/')
+        if compilationNeed == 'on': compilationNeed = True
+        else: compilationNeed = False
+        options = request.POST.get('options')
+        exetentions = request.POST.get('extentions')
+        record = Compiler(name=compilerName, needCompilation=compilationNeed,
+                          path=path, params=options, extention=exetentions)
+        record.save()
+
+        return HttpResponseRedirect('/')
+    else:
+        return render(request, 'addcompiler.html')
+
+
 def tasktheme(request):
     id = request.GET.get('id')
-    loctheme = themes.getThemes()
+    loctheme = JsonGenerators.getThemes()
     taskftheme = tasks.objects.all().filter(category=loctheme[int(id)]['name'])
     upload = uploadForm()
     solutions = Solution.objects.filter(user=get_cu(request))
@@ -320,16 +338,19 @@ def tasktheme(request):
         'solutions': solutions,
         'test': taskAndSol,
         'theme_id': id,
+        'langs': Compiler.objects.all(),
     }
     return render(request, "themepage.html", context)
 
 
 def saveFile(request):
     if request.method == "POST":
+        print(request.POST)
         page = request.POST['theme_id']
         user = get_cu(request)
         task = tasks.objects.get(id=int(request.POST['task_id']))
-        record = Solution(status="CH", file=request.FILES['file'], points=0, user=user, task=task)
+        record = Solution(status="CH", file=request.FILES['file'], points=0, user=user,
+                          task=task, lang=langDetect(request.FILES['file'].name, request.POST['lang']))
         record.save()
         file_updolad_handler(request.FILES['file'], user.login, record.id)
         record_task = tasks.objects.get(id=request.POST['task_id'])
@@ -339,6 +360,15 @@ def saveFile(request):
         runtests(MEDIA_ROOT + '/' + user.login + '/' + newName, record_task, record)
 
         return HttpResponseRedirect('/tasktheme/?id=' + page)
+
+
+def langDetect(file, passed):
+    try:
+        lang = Compiler.objects.get(extention=file[file.rfind('.'):]).name
+        return lang
+    except models.ObjectDoesNotExist:
+        return passed
+
 
 
 def get_cu(request):
@@ -394,3 +424,5 @@ def get_default_content(request):
     return {'name': request.session['name'],
             'surname': request.session['surname']
             }
+
+
