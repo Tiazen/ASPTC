@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}{{ themename }}{% endblock %}
+{% block scripts %}
+{% load static %}
+        <script type="text/javascript" src="{% static 'asp/js/student.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'asp/css/highlight.css' %}">
+{% endblock %}
+
+{% block leftmenu %}
+<nav class="col-sm-2 col-md-2 sidebar bg-dark position-fixed" id="menu" style="height: 100%;">
+    <div class="sidebar-sticky">
+        <a href="/" class="navbar-brand" id="sysname">АСПЗПП</a>
+        <div class="row">
+            <div class="col-12"><h4><a class="h4" href="/profile">{{ name }} {{ surname }}</a>
+            <a class="h6" href="/logout/" style="line-height: 18px;">Выход</a></h4></div>
+        </div>
+            <h3>Задачи</h3>
+            <ul class="nav nav-sidebar" style="display: block">
+                {% for i in tasks %}
+                    <li><a href="#{{ i.id }}" style="color: white; font-size: 24px;">{{ i.taskname }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+
+    <div class="col-11">
+    {% for i in test %}
+        <div class="task" id="{{ i.0.id }}">
+            <div class="row">
+                <div class="col">
+                    <h3>Название: {{ i.0.taskname }}</h3>
+                    <p>Описание: <br> {% autoescape off %}{{ i.0.taskdesc }}{% endautoescape %}</p>
+                </div>
+            </div>
+            <h4>Пример тестирования</h4>
+            <div class="row">
+                <div class="col-2">
+                    <h4>Входные данные</h4>
+                    {% autoescape off %}
+                    {{ i.0.testin }}
+                    {% endautoescape %}
+                </div>
+                <div class="col-2">
+                    <h4>Выходные данные</h4>
+                    {% autoescape off %}
+                    {{ i.0.testout }}
+                    {% endautoescape %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h4>Загрузка решения</h4>
+                    <form enctype="multipart/form-data" method="post" id="fileform{{ i.id }}" action="/loadfile/" >
+                        <input type="hidden" name="task_id" value="{{ i.0.id }}">
+                        <input type="hidden" name="theme_id" value="{{ theme_id }}">
+                        <select name="lang" style="margin-right: 12px;">
+                        {% for c in langs %}
+                            <option value="{{ c.name }}" >{{ c.name }}</option>
+                            {% endfor %}
+                        </select>
+                        {% csrf_token %}
+                        {{ form.file }}
+                        <br>
+                        <div style="margin-top: 8px;"><button type="submit" class="btn btn-success" onclick="test()">Отправить</button></div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h4>Отправленные решения</h4>
+                </div>
+            </div>
+            {% if solutions %}
+            <div class="row">
+                <div class="col-7">
+                <table class="table table-sm">
+                    <thead>
+                    <th scope="col">№ посылки в системе</th>
+                    <th scope="col">Язык</th>
+                    <th scope="col">Время</th>
+                    <th scope="col">Результат</th>
+                    <th scope="col">Баллы</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    </thead>
+                    <tbody>
+                    {% for j in i.1 %}
+                        <tr>
+                            <th scope="row"> {{ j.id }}</th>
+                            <th> {{ j.lang }}</th>
+                            <th> {{ j.time }}</th>
+                            <th> {{ j.status  }}</th>
+                            <th> {{ j.points }}</th>
+                            <td><a onclick="showCode({{j.id}})" id="showcode{{ j.id }}" href="#{{ i.0.id }}">
+                                <img src="{% static 'asp/images/basic_sheet_txt.svg' %}" style="width: 22px; height: 22px;"></a></td>
+                            <td><a onclick="showTests({{j.id}})" id="showtests{{ j.id }}" href="#{{ i.0.id }}">
+                                <img src="{% static 'asp/images/basic_gear.svg' %}" style="width: 22px; height: 22px;"></a></td>
+                        </tr>
+                                        <tr id="tr{{j.id}}" style="display: none">
+                        <td colspan="6">
+                            <div id="code{{ j.id }}">
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+        </div>
+{% endblock %}

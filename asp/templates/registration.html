@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Логин</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'asp/css/style.css' %}">
+    <script type="text/javascript" src="{% static 'asp/js/jquery.js' %}"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'asp/css/registration.css' %}">
+</head>
+
+<body>
+<form action="/regist/" method="post" class="form-signup">
+    <h1 class="h3 mb-3 font-weight-normal">Регистрация в системе</h1>
+    {% csrf_token %}
+    <h5 class="font-weight-normal">Логин</h5>
+    {{ form.login }}
+    <h5 class="font-weight-normal">Пароль</h5>
+    {{ form.passw }}
+    <h5 class="font-weight-normal">Имя</h5>
+    {{ form.name }}
+    <h5 class="font-weight-normal">Фамилия</h5>
+    {{ form.surname }}
+    <h5 class="font-weight-normal">Класс</h5>
+    {{ form.degree }}
+    <h5 class="font-weight-normal">Буква</h5>
+    {{ form.letter }}
+
+    <input type="submit" class="btn btn-lg btn-success btn-block" value="Зарегистрироваться">
+
+    <h6 style="margin-top: 15px; font-size: 16px;">Уже зарегистрированы? <a href="/login/">Войти</a></h6>
+</form>
+
+{{ error }}
+
+</body>
+</html>

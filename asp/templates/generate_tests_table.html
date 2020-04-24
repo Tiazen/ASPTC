@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col">
+        {% for i in tests %}
+        <h4>Тест {{ i.0 }}</h4>
+        {% if i.1%}
+        <div class="col-4" style="background-color: #f0ffed; padding: 5px; border-radius: 3px;">
+            <h5>OK</h5>
+        </div>
+        {% else %}
+        <div class="col-4" style="background-color: #ffeaea; padding: 5px; border-radius: 3px;">
+            <h5>ОШ</h5>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>

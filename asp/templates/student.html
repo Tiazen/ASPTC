@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}АСПЗП{% endblock %}
+{% block scripts %}
+{% load static %}
+        <script type="text/javascript" src="{% static 'asp/js/student.js' %}"></script>
+{% endblock %}
+{% csrf_token %}
+
+{%block leftmenu %}
+<div class="col-sm-2 col-md-2 sidebar bg-dark position-fixed" id="menu" style="height:100%;">
+<a href="/" class="navbar-brand" id="sysname">АСПЗПП</a>
+        <div class="row">
+            <div class="col-12"><h4><a class="h4" href="/profile">{{ name }} {{ surname }}</a>
+            <a class="h6" href="/logout/" style="line-height: 18px;">Выход</a></h4></div>
+        </div>
+</div>
+{% endblock %}
+
+{% block content %}
+            <div id="themes">
+                <style>
+                    #themes a {color: blue;}
+                    #themes a:hover {color: red;}
+                </style>
+                <h4 style="margin-left: 40px;">Темы: </h4>
+                <ul type="none">
+                    {% for i in themes %}
+                    <li><a href="tasktheme?id={{ i.id }}">{{ i.theme }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+{% endblock %}

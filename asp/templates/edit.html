@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+        <script type="text/javascript" src="{% static 'asp/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'asp/js/choose.js' %}"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'asp/css/addtask.css' %}">
+</head>
+<body>
+    <div class="container-fluid" style="height: 100%; margin-top: 13px;">
+        <div class="row">
+            <div class="col-5">
+                <form id='taskForm' method="POST">
+                {% csrf_token %}
+                <input type="hidden" id="id" value="{{ id }}">
+                <h4>Название задания: </h4>
+                <input type="text" name="taskName" maxlength="100" required id="id_taskname" class="form-control col-3"
+                               oninput="change('id_taskname','name')" value="{{ task.taskname }}">
+                <h4>Описание задания: </h4>
+                <textarea name="taskdescription" cols='55' rows='10' maxlength="1000"
+                                  required id="id_taskdescription" class="form-control col-8"
+                                  oninput="change('id_taskdescription', 'desc')">{{ task.taskdesc }}</textarea>
+                <h4>Категория задания:</h4>
+                <select style="margin-bottom: 20px;" class="form-control col-3" id="category" required>
+                            <option selected value="{{ actualcat }}">{{ actualcat }}</option>
+                {% for i in categories %}
+                    <option value="{{ i.theme }}">{{ i.theme }}</option>
+                {% endfor %}
+                </select><br>
+                <button class="btn btn-primary" type="button" id="add">Добавить тест</button>
+                        <div style="margin-top:15px; margin-bottom: 12px;"> <h4>Входные данные / Выходные данные</h4></div>
+                        <div id="vars" style="margin-bottom: 14px;">
+                    {% autoescape off %}
+                    {% for i in tests %}
+                    {{ i }}
+                    {% endfor %}
+                    {% endautoescape %}
+                </div>
+                <button type="button" id="edit" class="btn btn-success" style="margin-bottom: 10px;">Отправить задание</button>
+            </form>
+            <div style="margin-bottom: 10px;"><h5>Удалить задание</h5></div>
+            <button class="btn btn-danger" onclick="deleteTask()">Удалить задание</button>
+            </div>
+
+            <div class="col-7">
+                <h4>Предпросмотр задания</h4>
+                <div class="col-11">
+                    <div class="task-preview">
+                        <div class="row">
+                            <div class="col">
+                                <h4>Название: <span id="name">{{ task.taskname }}</span></h4>
+                                <h4>Описание: </h4><p><span id="desc">{% autoescape off %} {{ task.taskdesc }} {% endautoescape %}</span></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3" >
+                                <h5>Входные данные</h5>
+                                <h6 id="testin" style="background-color: #f7f7f7; padding: 3px; border-radius: 2px;">{% autoescape off %} {{ testin }} {% endautoescape %}</h6>
+                            </div>
+                            <div class="col-3">
+                                <h5>Выходные данные</h5>
+                                <h6 id="testout" style="background-color: #f7f7f7; padding: 3px; border-radius: 2px;">{% autoescape off %} {{ testout }} {% endautoescape %}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+function deleteTask(){
+       a = confirm('Вы действительно хотите удалить задание?')
+       if (a==true){ document.location.replace("/deletetask?id={{task.id}}")}
+        }</script>
+</body>
+</html>

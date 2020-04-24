@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block scripts %}
+{% load static %}
+        <script type="text/javascript" src="{% static 'asp/js/index.js' %}"></script>
+{% endblock %}
+{% block title %}Панель учителя{% endblock %}
+{% block leftmenu %}
+    <div class="col-sm-2 col-md-2 sidebar bg-dark position-fixed" id="menu" style="height: 100%;">
+        <a href="/" class="navbar-brand" id="sysname">АСПЗПП</a>
+        <div class="row">
+            <div class="col-12"><h4><a class="h4" href="/profile">{{ name }} {{ surname }}</a>
+            <a class="h6" href="/logout/" style="line-height: 18px;">Выход</a></h4></div>
+        </div>
+        <h3 id="classes">Классы</h3>
+        <div class="row">
+            <select id="num" class="form-control col-4" style="margin-right: 10px; margin-left: 15px;">
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+            </select>
+            <select id="letter" class="form-control col-4">
+                <option value="А">А</option>
+                <option value="Б">Б</option>
+                <option value="В">В</option>
+                <option value="Г">Г</option>
+                <option value="Д">Д</option>
+                <option value="Е">Е</option>
+            </select>
+            </div>
+            <a id="apply">Применить</a>
+            <h3 id="tasks">Задания</h3>
+            <h3 id="settings">Настройки</h3>
+
+        </div>
+{% endblock %}
+{%  block content %}
+    <div class="col">
+            <div id="filter">{% include 'upBar.html' %}</div>
+            <div id="className"></div>
+            <div id="studentTable"></div>
+            <div id="tasklist"></div>
+            <div id="setcon"></div>
+        </div>
+{% endblock %}

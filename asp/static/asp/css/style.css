@@ -1,0 +1,191 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: #fafbfc;
+}
+
+#wrapper {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.content {
+    margin-top: 82px;
+    margin-left: 12%;
+    height: 100%;
+    width: 82%;
+    max-width: 82%:
+}
+
+#nav {
+    background-color: #24292e;
+    width: 100%;
+    height: 52px;
+    margin: 0;
+    position: fixed;
+    top: 0;
+}
+
+#name {
+    position: inherit;
+    margin: 0;
+    right: 7%;
+    top: 8px;
+    margin-right: 12px;
+    color: white;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 25px;
+}
+
+#logout {
+    position: inherit;
+    float: right;
+    margin: 0;
+    margin-right: 5%;
+    top: 6px;
+    right: -2%;
+    color: white;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 26px;
+}
+
+a {
+    text-decoration: none;
+}
+
+#asptc {
+    color: white;
+    font-family: 'Roboto Condensed', sans-serif;
+    position: inherit;
+    margin: 0;
+    max-width: 5%;
+    float: left;
+    left: 3%;
+    font-size: 2.5em;
+}
+
+#leftMenu {
+    position: fixed;
+    top: 52px;
+    width: 12%;
+    height: 100%;
+    min-width: 150px;
+    background-color: #24292e;
+    margin: 0
+}
+
+#filter {
+    margin: 0;
+}
+
+#classes, #tasks, #settings{
+    color: white;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1.5em;
+    list-style-type: none;
+
+}
+
+#settings:hover {
+    color: red;
+}
+
+#setcon {
+    margin-left: 50px;
+}
+
+#num {
+    height: 42px;
+    width: 20%;
+    min-width: 40px;
+    border: 1px solid #CCC;
+}
+
+#letter {
+    height: 42px;
+    width: 20%;
+    min-width: 40px;
+    border: 1px solid #CCC;
+}
+
+#apply {
+    color: white;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 22px;
+    margin-top: 5%;
+}
+
+#apply:hover {
+    color: red;
+}
+
+a:hover {
+    color: red;
+}
+
+#studentTable {
+    position: absolute;
+    margin-left: 50px;
+    width: 100%
+}
+
+#className, #tasklist{
+    margin-left: 15%;
+    margin-top: 25px;
+    margin-left: 50px;
+    }
+
+#className h2{
+    font-family: 'Roboto Condensed', sans-serif;
+    }
+
+
+
+#tasks:hover {
+    color: red;
+}
+
+table {
+    border: 1px solid #ddd;
+    width: 75%;
+}
+
+table td {
+    border: 1px solid #ddd;
+}
+
+table th {
+    border: 1px solid #ddd;
+}
+
+.task {
+    font-family: 'Roboto Condensed', sans-serif;
+    padding: 16px;
+    width: 100%;
+    border: 1px solid #ddd;
+    background-color: #asd;
+    margin-top: 5px;
+    border-radius: 3px;
+}
+
+.task h3 {
+    font-size: 25px;
+    margin: 0;
+    margin-bottom: 15px;
+    background-color: #asd;
+}
+
+.task h4 {
+    margin: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.task p{
+    font-size: 18px;
+    margin: 0;
+    margin-bottom: 15px;
+}
+

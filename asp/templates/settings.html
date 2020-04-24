@@ -1,0 +1,42 @@
+ <h4>Категории заданий:</h4>
+        <div id="spfthemes">
+        {% for i in themes %}
+        <div class="row" style="max-width: 30%;  background-color: #fff; margin-bottom: 10px; padding: 6px; border-radius: 4px;
+                                border: 1px solid #ddd; margin-left: 1px;" id="r{{ i.id }}">
+            <div class="col">
+                <h5 class="category">{{ i.theme }}</h5>
+            </div>
+            <div class="col">
+                    <button type="button" class="close" aria-label="Close" onclick="del('{{i.id}}')">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-3" style="padding-right: 5px;">
+                <input class="form-control" id="newtheme" placeholder="Категория заданий" value="">
+            </div>
+            <div class="col" style="padding-left: 5px;">
+                <button type="button" class="btn" style="margin-left: 10px; margin-bottom: 10px;"
+                        onclick="savech()">Добавить категорию</button><br>
+            </div>
+        </div>
+    <h4>Доступные компиляторы</h4>
+
+    <div id="compilers">
+        {% for i in compilers %}
+            <div class="row" id="compiler_{{i.id}}" style="max-width: 30%;  background-color: #fff; margin-bottom: 10px; padding: 6px; border-radius: 4px;
+                                border: 1px solid #ddd; margin-left: 1px;">
+                <div class="col" >
+                    <h5>{{ i.name }}</h5>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="row" id="addCompiler">
+                <div class="col">
+                    <button class="btn btn-success" onclick="window.location.replace('addcompiler/')">Добавить компилятор</button>
+                </div>
+            </div>
+    </div>
