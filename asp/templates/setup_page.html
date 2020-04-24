@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Настройки системы</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="margin-top: 50px;">
+            <div class="col">
+                <h2>Установки системы</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <form enctype="multipart/form-data" method="post" action="/setuppage/" >
+                    {% csrf_token %}
+                    <input class="form-control" name="login" placeholder="Логин администратора" type="text"
+                           style="margin-top: 18px;" required>
+                    <input class="form-control" name="password" placeholder="Пароль администратора" type="password"
+                           style="margin-top: 18px;" required>
+                    <input class="form-control" name="name" placeholder="Имя" type="text"
+                           style="margin-top: 18px;" required>
+                    <input class="form-control" name="surname" placeholder="Фамилия" type="text"
+                           style="margin-top: 18px;" required>
+                    <h4>Загрузите лого</h4>
+                    <input type="file" name="logo" style="margin-bottom: 14px;">
+                    <button type="submit" class="btn btn-success">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -20,16 +20,17 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 
+import asp.auth
 from asp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
-    path('gettasklist/', views.gettasklist),
-    path('getclasslist/', views.getclasslist),
-    path('regist/', views.registuser),
-    path('login/', views.login),
-    path('logout/', views.logout),
+    path('gettasklist/', views.get_task_list),
+    path('getclasslist/', views.get_class_list),
+    path('regist/', asp.auth.registrate_user),
+    path('login/', asp.auth.login),
+    path('logout/', asp.auth.logout),
     path('addtask/', views.addtask),
     path('edittask/', views.edittask),
     path('search/', views.searchlist),
@@ -37,13 +38,14 @@ urlpatterns = [
     path('settings/', views.returnsettings),
     path('updatethemes/', views.updatethemes),
     path('tasktheme/', views.tasktheme),
-    path('loadfile/', views.saveFile),
-    path('deletetask', views.deleteTask),
+    path('loadfile/', views.save_file),
+    path('deletetask', views.delete_task),
     path('getcode/', views.getcode),
     path('gettests/', views.gettests),
     path('profile/', views.profile),
-    path('changepass/', views.changepass),
-    path('addcompiler/', views.addcompiler)
+    path('changepass/', asp.auth.change_password),
+    path('addcompiler/', views.addcompiler),
+    path('setuppage/', views.setup),
 
 
 ]

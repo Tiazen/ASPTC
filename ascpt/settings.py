@@ -24,8 +24,8 @@ SECRET_KEY = 'xr7v!xs58+1+v*&#(5-c5m3sz!8(i)_ryhq&5j*04d32yqt350'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+IS_SETUP = False
+ALLOWED_HOSTS = ["127.0.0.1", "192.168.100.2"]
 
 
 # Application definition
@@ -76,12 +76,8 @@ WSGI_APPLICATION = 'ascpt.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_db',
-        'USER': 'django',
-        'PASSWORD': '12345',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

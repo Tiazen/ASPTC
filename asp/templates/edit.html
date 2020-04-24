@@ -28,7 +28,7 @@
                 <select style="margin-bottom: 20px;" class="form-control col-3" id="category" required>
                             <option selected value="{{ actualcat }}">{{ actualcat }}</option>
                 {% for i in categories %}
-                    <option value="{{ i.name }}">{{ i.name }}</option>
+                    <option value="{{ i.theme }}">{{ i.theme }}</option>
                 {% endfor %}
                 </select><br>
                 <button class="btn btn-primary" type="button" id="add">Добавить тест</button>
@@ -53,7 +53,7 @@
                         <div class="row">
                             <div class="col">
                                 <h4>Название: <span id="name">{{ task.taskname }}</span></h4>
-                                <h4>Описание: </h4><p><span id="desc">{{ task.taskdesc }}</span></p>
+                                <h4>Описание: </h4><p><span id="desc">{% autoescape off %} {{ task.taskdesc }} {% endautoescape %}</span></p>
                             </div>
                         </div>
                         <div class="row">

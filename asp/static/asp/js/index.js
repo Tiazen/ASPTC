@@ -88,38 +88,29 @@ $(document).ready(function(){
 });
 
 function del(el) {
-    $(el).remove();
-}
-
-function savech() {
-    var i = $('.category');
-    var res = ''
-    for (var j=0; j < i.length; ++j) {
-        res += $(i[j]).text()
-        if (j != i.length-1) {
-            res += ','
-        }
-    }
     $.ajax({
         url: '/updatethemes/',
         type: 'POST',
-        data: 'data=' + res
-    });
+        data: 'data=&delete=' + el,
+        success: function(resp) {
+              $('#setcon').html('<h4>Настройки</h4>');
+              $('#setcon').append(resp)
+            }
+        });
 }
 
-function addtheme() {
-    let count = $('.category').length
-    if ($('#newtheme').val() != '') {
-    $('#spfthemes').append('<div class="row" style="max-width: 30%;  background-color: #fff; margin-bottom: 10px;' +
-    'padding: 6px; border-radius: 4px;border: 1px solid #ddd; margin-left: 1px;" id="r' + count + '"><div class="col">' +
-    '<h5 class="category">' + $('#newtheme').val() + '</h5></div><div class="col"><button type="button" class="close" aria-label="Close"' +
-     'onclick="del(\'#r' + count + '\')"><span aria-hidden="true">&times;</span></button></div></div>');
-     $('#newtheme').val('')
-     $('#newtheme').css('border', '1px solid #ced4da')
-     }
-     else {
-        $('#newtheme').css('border', '1px solid red')
-     }
+function savech() {
+    var i = document.getElementById('newtheme').value;
+    console.log(i)
+    $.ajax({
+        url: '/updatethemes/',
+        type: 'POST',
+        data: 'data=' + i,
+        success: function(resp) {
+              $('#setcon').html('<h4>Настройки</h4>');
+              $('#setcon').append(resp)
+            }
+    });
 }
 
 function showCode(n) {

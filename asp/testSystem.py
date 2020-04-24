@@ -46,6 +46,8 @@ def runtests(filename, record_task, record_test):
                     bytearray(bytes(test_output[i], 'utf-8')).replace(b'\\n', b'\n').replace(bytes(' ', 'utf-8'), b'')))
             test_result.append(0)
 
+        print(err)
+
     points = 100
     if 0 in test_result:
         points = test_result.count(1)

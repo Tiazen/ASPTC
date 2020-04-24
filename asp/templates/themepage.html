@@ -3,7 +3,7 @@
 {% block scripts %}
 {% load static %}
         <script type="text/javascript" src="{% static 'asp/js/student.js' %}"></script>
-        <link rel="stylesheet" href="{% static 'asp/css/highlight.css' %}"
+        <link rel="stylesheet" href="{% static 'asp/css/highlight.css' %}">
 {% endblock %}
 
 {% block leftmenu %}
@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col">
                     <h3>Название: {{ i.0.taskname }}</h3>
-                    <p>Описание: <br> {{ i.0.taskdesc }}</p>
+                    <p>Описание: <br> {% autoescape off %}{{ i.0.taskdesc }}{% endautoescape %}</p>
                 </div>
             </div>
             <h4>Пример тестирования</h4>

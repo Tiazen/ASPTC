@@ -23,12 +23,15 @@
 {% block content %}
 <div class="col-11">
     <h2>Решенные задания</h2>
+    {% if not len%}
+        <h4>Решенных заданий нет</h4>
+    {% endif %}
     {% for i in  items%}
         <div class="task">
             <div class="row" id="{{ i.0.id }}">
                 <div class="col">
                     <h3>Название: {{ i.0.taskname }}</h3>
-                    <p>Описание: <br> {{ i.0.taskdesc }}</p>
+                    <p>Описание: <br> {% autoescape off %}{{ i.0.taskdesc }} {% endautoescape %}</p>
                 </div>
             </div>
             <h4>Пример тестирования</h4>

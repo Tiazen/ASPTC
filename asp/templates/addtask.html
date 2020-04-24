@@ -25,12 +25,14 @@
                           required id="id_taskdescription" class="form-control col-8"
                           oninput="change('id_taskdescription', 'desc')"></textarea>
                 <h4>Категория задания:</h4>
+                <h6><a href="/settings/">Добавить категорию</a></h6>
                 <select style="margin-bottom: 20px;" class="form-control col-3" id="category" required>
                     <option selected value="{{ actualcat }}">{{ actualcat }}</option>
                 {% for i in categories %}
-                    <option value="{{ i.name }}">{{ i.name }}</option>
+                    <option value="{{ i.theme }}">{{ i.theme }}</option>
                 {% endfor %}
                 </select>
+
                 <button class="btn btn-primary" type="button" id="add">Добавить тест</button>
                 <div style="margin-top:15px; margin-bottom: 12px;"> <h4>Входные данные / Выходные данные</h4></div>
                 <div id="vars" style="margin-bottom: 14px;">
