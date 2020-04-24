@@ -16,9 +16,44 @@
     <div class="container-fluid" style="height: 100%;">
         <div class="row" style="height: 100%;">
             {% block leftmenu %}
+                <div class="col-sm-2 col-md-2 sidebar bg-dark position-fixed" id="menu" style="height: 100%;">
+        <a href="/" class="navbar-brand" id="sysname">АСПЗПП</a>
+        <div class="row">
+            <div class="col-12"><h4><a class="h4" href="/profile">{{ name }} {{ surname }}</a>
+            <a class="h6" href="/logout/" style="line-height: 18px;">Выход</a></h4></div>
+        </div>
+        <h3 id="classes">Классы</h3>
+        <div class="row">
+            <form action="/class/" method="post" class="form-inline">
+                {% csrf_token %}
+            <select id="num" class="form-control col-4" style="margin-right: 10px; margin-left: 15px;" name="degree">
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+            </select>
+            <select id="letter" class="form-control col-4" name="letter">
+                <option value="А">А</option>
+                <option value="Б">Б</option>
+                <option value="В">В</option>
+                <option value="Г">Г</option>
+                <option value="Д">Д</option>
+                <option value="Е">Е</option>
+            </select>
+                <input type="submit" value="Применить" name="Применить" style="border: 1px solid #ddd; width: 60%; margin: 12px;">
+                </form>
+            </div>
+            <h3 id="tasks"><a href="/tasks/">Задания</a></h3>
+            <h3 id="settings"><a href="/settings/">Настройки</a></h3>
+
+        </div>
             {% endblock %}
             <main class="content col-10 offset-sm-2" style="margin-top: 42px;">
                 {% block content %}
+
                 {% endblock %}
             </main>
         </div>

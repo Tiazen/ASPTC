@@ -26,8 +26,7 @@ from asp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
-    path('gettasklist/', views.get_task_list),
-    path('getclasslist/', views.get_class_list),
+    path('tasks/', views.create_task_list),
     path('regist/', asp.auth.registrate_user),
     path('login/', asp.auth.login),
     path('logout/', asp.auth.logout),
@@ -46,6 +45,7 @@ urlpatterns = [
     path('changepass/', asp.auth.change_password),
     path('addcompiler/', views.addcompiler),
     path('setuppage/', views.setup),
+    path('class/', views.classpage)
 
 
 ]

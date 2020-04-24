@@ -1,11 +1,28 @@
-{% for item in tasks %}
+{% extends "base.html" %}
+{% load static %}
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'asp/js/index.js' %}"></script>
+{% endblock %}
+{% block title %}Панель учителя{% endblock %}
+
+{%  block content %}
+    <div class="col">
+            <div id="filter">{% include 'upBar.html' %}</div>
+            <div id="className"></div>
+            <div id="studentTable"></div>
+            <div id="tasklist">
+                {% for item in tasks %}
     <div class="task">
     <h3>Название: {{  item.taskname }}</h3>
     <p>
         {{ item.taskdesc }}
         <a href="/edittask?taskid={{ item.id }}" style="float: right; position: relative; top: -16px;">
-        <img src="./static/asp/images/controll.png" style=" width: 32px;height: 32px; margin-bottom: 50%;">
+        <img src="{% static "asp/images/controll.png" %}" style=" width: 32px;height: 32px; margin-bottom: 50%;">
         </a>
     </p>
     </div>
-{% endfor %}
+    {% endfor %}
+            </div>
+            <div id="setcon"></div>
+        </div>
+{% endblock %}

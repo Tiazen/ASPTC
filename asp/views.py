@@ -32,9 +32,12 @@ def index(request):
 
 
 def create_task_list(request, name=None):
+    dc = get_default_content(request)
+    print(dc)
     if name is None or name == '':
         all_tasks = tasks.objects.all()
-        return render(request, "tasklist.html", {"tasks": all_tasks})
+        dc.update({"tasks": all_tasks})
+        return render(request, "tasklist.html", dc)
     else:
         all_tasks = tasks.objects.filter(taskname__startswith=name)
         return render(request, "tasklist.html", {"tasks": all_tasks})
@@ -54,7 +57,7 @@ def get_task_list(request):
     return HttpResponse(resp)
 
 
-def get_class_list(request):
+def classpage(request):
     if is_admin(request):
         degree = request.POST['degree']
         letter = request.POST['letter']
@@ -63,10 +66,13 @@ def get_class_list(request):
         if len(all_users) != 0:
             for i in range(len(all_users)):
                 pupil_list.append((i + 1, all_users[i]))
-            resp = render(request, 'generate_table.html', {'all': pupil_list})
-            return HttpResponse(resp)
+            dc = get_default_content(request)
+            dc.update({'all': pupil_list, 'class': degree, 'letter': letter})
+            return render(request, 'class_page.html', dc)
         else:
-            return HttpResponse('Nothing')
+            dc = get_default_content(request)
+            dc.update({'error': "Список класса пуст", 'class': degree, 'letter': letter})
+            return render(request, 'class_page.html', dc)
     else:
         return HttpResponseRedirect('/')
 
@@ -193,8 +199,9 @@ def edittask(request):
 
 
 def returnsettings(request):
-    return render(request, 'settings.html', {'themes': Theme.objects.all(),
-                                                 'compilers': Compiler.objects.all()})
+    dc = get_default_content(request)
+    dc.update({'themes': Theme.objects.all(), 'compilers': Compiler.objects.all()})
+    return render(request, 'settings.html', dc)
 
 
 def updatethemes(request):
@@ -323,3 +330,5 @@ def setup(request):
                 f.write(chunk)
 
     return render(request, 'setup_page.html')
+
+

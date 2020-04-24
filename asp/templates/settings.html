@@ -1,4 +1,12 @@
- <h4>Категории заданий:</h4>
+{% extends "base.html" %}
+{% load static %}
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'asp/js/index.js' %}"></script>
+{% endblock %}
+{% block title %}Панель учителя{% endblock %}
+
+{%  block content %}
+<h4>Категории заданий:</h4>
         <div id="spfthemes">
         {% for i in themes %}
         <div class="row" style="max-width: 30%;  background-color: #fff; margin-bottom: 10px; padding: 6px; border-radius: 4px;
@@ -40,3 +48,4 @@
                 </div>
             </div>
     </div>
+{% endblock %}

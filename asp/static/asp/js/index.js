@@ -1,5 +1,4 @@
 $(document).ready(function(){
-    $('#filter').hide();
     function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -32,18 +31,12 @@ $(document).ready(function(){
 
 
    $("#apply").click(function(event){
-      $('#tasklist').html('');
-      $('#setcon').html('');
-      $('#filter').hide();
-      var classF = document.getElementById("num"); // Получаем наш список
-      var classVal = classF.options[classF.selectedIndex].value;
-      var letter = document.getElementById("letter");
-      var letterVal = letter.options[letter.selectedIndex].value;
-
       console.log(classVal, letterVal);
-
+      let x = new XMLHttpRequest();
+      x.open("POST", "/class/");
+      x.send("degree=" + classVal + "&letter=" + letterVal);
       $.ajax({
-            url: '/getclasslist/',
+            url: '/class/',
             type: 'POST',
             data: "degree=" + classVal + "&letter=" + letterVal,
             success: function(response) {
@@ -55,36 +48,6 @@ $(document).ready(function(){
             }
         });
       });
-
-    $("#tasks").click(function(event){
-      $('#filter').show();
-      $('#className').html('');
-      $('#studentTable').html('');
-      $('#setcon').html('');
-      $.ajax({
-        url: '/gettasklist/',
-        type: 'POST',
-        success: function(response) {
-            $('#tasklist').html(response);
-        }
-      });
-    });
-
-    $("#settings").click(function(event) {
-       $('#filter').hide();
-       $('#tasklist').html('');
-       $('#className').html('');
-       $('#studentTable').html('');
-       $('#setcon').html('<h4>Настройки</h4>');
-
-       $.ajax({
-         url: '/settings/',
-         type: 'POST',
-         success: function(resp) {
-              $('#setcon').append(resp)
-            }
-        });
-    });
 });
 
 function del(el) {

@@ -1,12 +1,10 @@
 {% extends "base.html" %}
-{% load static %}
-{% block scripts %}
-    <script type="text/javascript" src="{% static 'asp/js/index.js' %}"></script>
-{% endblock %}
+
 {% block title %}Панель учителя{% endblock %}
 
 
 {%  block content %}
+    <h3>{{ class }} {{ letter }}</h3>
 <table class="table">
     <tr>
         <th>№</th>
@@ -14,6 +12,11 @@
         <th>Имя</th>
         <td>Выполненные задания</td>
     </tr>
+    {% if error %}
+        <tr>
+        <td>{{ error }}</td>
+        </tr>
+    {% endif %}
     {% for i in all %}
     <tr>
         <td>{{ i.0 }}</td>
